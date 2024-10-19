@@ -2,7 +2,7 @@
 
 ## 🚀 Overview
 This project is a **full-stack Document Management System** built with **Go (Gin + GORM)** for the backend and **Vue.js** for the frontend. The application allows users to register, log in, and manage their personal documents securely.
-
+![Document Detail](https://github.com/user-attachments/assets/587a7d3b-4a38-451a-bcd9-83f070fb07bd)
 ## 🛠️ Features
 - **User Authentication**:
   - Register new users with a username, email, and password.
