@@ -36,5 +36,5 @@ This project is a **full-stack Document Management System** built with **Go (Gin
 
 ### Clone the repository
 ```bash
-git clone https://github.com/yourusername/document-management-system.git
+git clone https://github.com/cnc2003/document-management-system.git
 cd document-management-system
