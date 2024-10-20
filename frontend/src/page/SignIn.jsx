@@ -52,7 +52,7 @@ export default function SignIn() {
   return (
     <>
       <div className="fixed inset-0 grid place-content-center z-10">
-        <div className="bg-white shadow-md rounded-lg p-6 w-96">
+        <div className="bg-white shadow-md rounded-2xl p-6 w-96">
           <h1 className="text-2xl font-bold text-center mb-4">Sign in</h1>
           {alert && <div className="alert text-red-500 mb-4">{alert}</div>}
           <form onSubmit={handleLogin} className="flex flex-col">
