@@ -8,12 +8,14 @@ import (
 )
 
 // GenerateToken generates a JWT token for a user
-func GenerateToken(userID int) (string, error) {
+func GenerateToken(userId int, userName string, email string) (string, error) {
 	claims := jwt.MapClaims{
-		"user_id": userID,
-		"exp":     time.Now().Add(time.Hour * 72).Unix(), 
+		"user_id": userId,
+		"name":    userName,
+		"email":   email,
+		"exp":     time.Now().Add(time.Hour * 72).Unix(),
 	}
 
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims) 
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString([]byte(os.Getenv("JWT_SECRET")))
 }

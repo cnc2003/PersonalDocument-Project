@@ -4,6 +4,7 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import FloatingEmojis from "./component/FloatingEmojis";
 
 function App() {
   const login = async () => {
@@ -25,16 +26,21 @@ function App() {
     } catch (error) {
       console.error("Error during login:", error);
     }
-  }
+  };
 
   login();
   return (
     <>
-      <h1 className="text-3xl font-bold underline">Hello Document miner!!!</h1>
-      <Link to={`signin`} className="btn">
-        {" "}
-        singin{" "}
-      </Link>
+      <div className="fixed inset-0 grid place-content-center z-10">
+        <h1 className="text-3xl font-bold underline">
+          Hello Document miner!!!
+        </h1>
+        <Link to={`signin`} className="btn">
+          singin
+        </Link>
+      </div>
+
+      <FloatingEmojis />
     </>
   );
 }

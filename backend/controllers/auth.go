@@ -32,7 +32,14 @@ func Register(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "User registered successfully!"})
+	// Generate JWT token
+	token, err := utils.GenerateToken(user.ID, user.Username, user.Email)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"type": "REGS","token": token})
 }
 
 func Login(c *gin.Context) {
@@ -50,24 +57,24 @@ func Login(c *gin.Context) {
 
 	// Search user by either username or email
 	if err := config.DB.Where("username = ? OR email = ?", credential.User, credential.User).First(&user).Error; err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentialsA"})
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "user "  + credential.User + " not found"})
 		return
 	}
 
 	// Check password is correctly
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(credential.Password)); err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{
-			"error":   "Unauthorized: Invalid password",
+			"error":   "Incorret password",
 		})
 		return
 	}
 
 	// Generate JWT token
-	token, err := utils.GenerateToken(user.ID)
+	token, err := utils.GenerateToken(user.ID, user.Username, user.Email)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"token": token})
+	c.JSON(http.StatusOK, gin.H{"type": "LOGIN","token": token})
 }
