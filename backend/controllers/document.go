@@ -11,7 +11,6 @@ import (
 
 func GetDocuments(c *gin.Context) {
 	userID := c.GetInt("user_id")
-
 	var documents []models.Document
 	if err := config.DB.Where("user_id = ?", userID).Find(&documents).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch documents"})
@@ -24,7 +23,6 @@ func GetDocuments(c *gin.Context) {
 func GetDocumentByID(c *gin.Context) {
 	userID := c.GetInt("user_id")
 	documentId, _ := strconv.Atoi(c.Param("id"))
-
 	var document models.Document
 	if err := config.DB.Where("id = ? AND user_id = ?", documentId, userID).
 		First(&document).Error; err != nil {
@@ -34,6 +32,7 @@ func GetDocumentByID(c *gin.Context) {
 
 	c.JSON(http.StatusOK, document)
 }
+
 
 func CreateDocument(c *gin.Context) {
 	userID := c.GetInt("user_id")

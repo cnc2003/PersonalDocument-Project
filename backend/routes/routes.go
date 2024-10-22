@@ -14,13 +14,12 @@ func SetupRouter() *gin.Engine {
 
 	router.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"http://localhost"}, // Allow React frontend origin
-		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Authorization", "Content-Type"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
 		MaxAge:           12 * time.Hour,
 	}))
-
 
 	router.POST("/register", controllers.Register)
 	router.POST("/login", controllers.Login)
@@ -29,8 +28,8 @@ func SetupRouter() *gin.Engine {
 	documentRoutes := router.Group("/documents")
 	documentRoutes.Use(middleware.AuthMiddleware())
 	{
-		documentRoutes.POST("/", controllers.CreateDocument)
-		documentRoutes.GET("/", controllers.GetDocuments)
+		documentRoutes.POST("", controllers.CreateDocument)
+		documentRoutes.GET("", controllers.GetDocuments)
 		documentRoutes.GET("/:id", controllers.GetDocumentByID)
 		documentRoutes.PUT("/:id", controllers.UpdateDocument)
 		documentRoutes.DELETE("/:id", controllers.DeleteDocument)
