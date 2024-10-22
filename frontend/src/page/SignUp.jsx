@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../App.css";
 import FloatingEmojis from "../component/FloatingEmojis";
+import { JwtDecode } from "../util/util";
 export default function SignUp() {
   const [credential, setCredential] = useState({
     user: "",
@@ -10,7 +11,7 @@ export default function SignUp() {
     password: "",
     confirmPassword: "",
   });
-
+  const navigate = useNavigate();
   const [alert, setAlert] = useState("");
   const [passwordCriteria, setPasswordCriteria] = useState({
     length: false,
@@ -41,7 +42,7 @@ export default function SignUp() {
   async function handleSignUp(event) {
     event.preventDefault();
     if (credential.password !== credential.confirmPassword) {
-      setAlert("Passwords do not match");
+      setAlert("😖 Passwords do not match");
       setTimeout(() => {
         setAlert("");
       }, 5000);
@@ -68,6 +69,8 @@ export default function SignUp() {
       for (const [key, value] of Object.entries(data)) {
         localStorage.setItem(key, value);
       }
+      const username = localStorage.getItem("username");
+      return navigate(`/${username}/document`);
     } catch (error) {
       setAlert(error.response.data.error);
       setTimeout(() => {
@@ -184,8 +187,7 @@ export default function SignUp() {
               inputCriteria.email &&
               passwordCriteria.length &&
               passwordCriteria.uppercase &&
-              passwordCriteria.number &&
-              credential.password == credential.confirmPassword
+              passwordCriteria.number 
                 ? false
                 : true
             }

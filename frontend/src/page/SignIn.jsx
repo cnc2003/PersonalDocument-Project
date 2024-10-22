@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { JwtDecode } from "../util/util";
 import FloatingEmojis from "../component/FloatingEmojis";
@@ -10,7 +10,7 @@ export default function SignIn() {
     password: "",
   });
   const [alert, setAlert] = useState("");
-
+  const navigate = useNavigate()
   async function handleLogin(event) {
     event.preventDefault();
     try {
@@ -33,6 +33,8 @@ export default function SignIn() {
         localStorage.setItem(key, value);
       }
       // Handle successful login
+      const username = localStorage.getItem("username");
+      return navigate(`/${username}/document`);
     } catch (error) {
       setAlert(error.response.data.error);
       setTimeout(() => {
@@ -49,6 +51,7 @@ export default function SignIn() {
     }));
   }
 
+  useEffect(() => {localStorage.clear()}, []);
   return (
     <>
       <div className="fixed inset-0 grid place-content-center z-10">
