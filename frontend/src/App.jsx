@@ -9,7 +9,7 @@ function App() {
         <h1 className="text-3xl font-bold underline">
           Hello Document miner!!!
         </h1>
-        <Link to={`signin`} className="btn">
+        <Link to={`signin`} className="">
           singin
         </Link>
       </div>

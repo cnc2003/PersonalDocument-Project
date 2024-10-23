@@ -3,23 +3,31 @@
 @tailwind utilities;
 
 .alert {
-    @apply bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative;
+  @apply bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative;
 }
 
 .btn {
-    @apply bg-gray-500 hover:bg-gray-700 bg-opacity-30 text-white font-bold py-1 px-4 rounded;
+  @apply bg-gray-500 hover:bg-gray-700 bg-opacity-30 text-white font-bold py-1 px-4 rounded;
 }
 .layout {
-    width: 100%;
-  
-    display: grid;
-    grid:
-      ". header ." auto
-      "leftSide body rightSide" auto
-      / auto 80% auto;
-  }
-  
-  .header { grid-area: header; }
-  .leftSide { grid-area: leftSide; }
-  .body { grid-area: body; }
-  .rightSide { grid-area: rightSide; }
+  overflow: hidden;
+  width: 100%;
+  display: grid;
+  grid:
+    ". header ." auto
+    "leftSide body rightSide" auto
+    / auto 80% auto;
+}
+
+.header {
+  grid-area: header;
+}
+.leftSide {
+  grid-area: leftSide;
+}
+.body {
+  grid-area: body;
+}
+.rightSide {
+  grid-area: rightSide;
+}

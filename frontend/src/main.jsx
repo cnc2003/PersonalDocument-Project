@@ -10,6 +10,7 @@ import {
 import SignIn from './page/SignIn.jsx';
 import SignUp from './page/SignUp.jsx';
 import DocumentList from './page/DocumentList.jsx';
+import Playground from './page/Playground.jsx';
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,9 @@ const router = createBrowserRouter([
   {
     path: "/:username/document",
     element: <DocumentList />,
+  },{
+    path: "/playground",
+    element: <Playground />
   }
 ]);
 
