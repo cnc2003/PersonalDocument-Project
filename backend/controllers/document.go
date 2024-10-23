@@ -16,7 +16,7 @@ func GetDocuments(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch documents"})
 		return
 	}
-
+	
 	c.JSON(http.StatusOK, documents)
 }
 
@@ -33,7 +33,6 @@ func GetDocumentByID(c *gin.Context) {
 	c.JSON(http.StatusOK, document)
 }
 
-
 func CreateDocument(c *gin.Context) {
 	userID := c.GetInt("user_id")
 	var document models.Document
@@ -45,7 +44,7 @@ func CreateDocument(c *gin.Context) {
 
 	document.UserID = userID
 	if err := config.DB.Create(&document).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"errorC" : err})
+		c.JSON(http.StatusInternalServerError, gin.H{"errorC": err})
 		return
 	}
 
