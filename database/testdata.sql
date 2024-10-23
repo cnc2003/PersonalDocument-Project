@@ -11,9 +11,9 @@ INSERT INTO `users` (`name`, `username`, `email`, `password`, `createdOn`, `upda
 ('Eve', 'eve345', 'eve@example.com', '$2a$10$yrnZAPsc599PB2Nk2JKI2OZnsFFrJ2a7uAFsW/urQyKOcKo2twsMa', NOW(), NOW());
 
 -- Insert test documents (tasks) for each user
-INSERT INTO `documents` (`user_id`, `title`,`imageUrl`, `content`, `createdOn`, `updatedOn`, `privacy`) VALUES
+INSERT INTO `documents` (`user_id`, `title`,`emoji`,`imageUrl`, `content`, `createdOn`, `updatedOn`, `privacy`) VALUES
 -- Documents for Alice
-(1, 'My First Document','https://fastly.picsum.photos/id/49/536/354.jpg?hmac=nHnd7iRJJCEu5ETUJ1utIrDqxG0pq_JrU_d_9zSnuL0', '# Project Documentation.md
+(1, 'My First Document','📝','https://fastly.picsum.photos/id/49/536/354.jpg?hmac=nHnd7iRJJCEu5ETUJ1utIrDqxG0pq_JrU_d_9zSnuL0', '# Project Documentation.md
 
 # Project Overview: Task Management System
 
@@ -38,7 +38,7 @@ This document outlines the key components and functionality of our task manageme
 2. Install dependencies using `npm install`
 3. Configure environment variables
 4. Run `npm start` to launch the application', NOW(), NOW(), 'PRIVATE'),
-(1, 'My Second Document','https://fastly.picsum.photos/id/659/536/354.jpg?hmac=rDYerKb1XZkOQo_yPZDDV6mc1c8pj5CGU9cdsQwldgs', '# Meeting Minutes.md
+(1, 'My Second Document','🕊️','https://fastly.picsum.photos/id/659/536/354.jpg?hmac=rDYerKb1XZkOQo_yPZDDV6mc1c8pj5CGU9cdsQwldgs', '# Meeting Minutes.md
 
 # Team Meeting Minutes - Project Phoenix
 
@@ -68,7 +68,7 @@ This document outlines the key components and functionality of our task manageme
 **Date**: October 30, 2024  
 **Time**: 10:00 AM
 ', NOW(), NOW(), 'PUBLIC'),
-(1, 'My Third Document','https://fastly.picsum.photos/id/213/536/354.jpg?hmac=uR4LvY7i-5xHRT95H_5axefzY962e0SahoabNthg3zg', '# Style Guide.md
+(1, 'My Third Document','🐯','https://fastly.picsum.photos/id/213/536/354.jpg?hmac=uR4LvY7i-5xHRT95H_5axefzY962e0SahoabNthg3zg', '# Style Guide.md
 
 # Company Style Guide
 
@@ -96,7 +96,7 @@ This document outlines the key components and functionality of our task manageme
 3. Cards
 4. Navigation
 ', NOW(), NOW(), 'PRIVATE'),
-(1, 'My Fourth Document','', '# Research Notes.md
+(1, 'My Fourth Document','','', '# Research Notes.md
 
 # Research Notes: AI in Healthcare
 
