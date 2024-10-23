@@ -6,30 +6,34 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 
 -- -----------------------------------------------------
 -- Schema mydb
--- -----------------------------------------------------
+-- ------------------------documents-----------------------------
+DROP DATABASE IF EXISTS document;
+CREATE DATABASE document;
+SET GLOBAL time_zone = '+00:00';
+USE document;
+DROP TABLE IF EXISTS documents;
+DROP TABLE IF EXISTS users;
 
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `document` DEFAULT CHARACTER SET utf8 ;
-USE `document` ;
 
 -- -----------------------------------------------------
 -- Table `mydb`.`users`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `users` (
-  `user_id` INT AUTO_INCREMENT NOT NULL,
-  `user_name` VARCHAR(100) NOT NULL,
-  `user_username` VARCHAR(50) NOT NULL,
-  `user_email` VARCHAR(50) NOT NULL,
-  `user_password` VARCHAR(50) NULL,
-  `user_createdOn` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-  `user_updatedOn` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
-  PRIMARY KEY (`user_id`),
-  CHECK (user_name <> ''),
-  CHECK (user_username <> ''),
-  CHECK (user_email <> ''),
-  UNIQUE INDEX `id_UNIQUE` (`user_id` ASC) VISIBLE
+  `id` INT AUTO_INCREMENT NOT NULL,
+  `name` VARCHAR(100) NOT NULL,
+  `username` VARCHAR(50) NOT NULL,
+  `email` VARCHAR(50) UNIQUE NOT NULL,
+  `password` VARCHAR(100) NULL,
+  `createdOn` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  `updatedOn` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+  PRIMARY KEY (`id`),
+  CHECK (name <> ''),
+  CHECK (username <> ''),
+  CHECK (email <> ''),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE
 )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
@@ -40,19 +44,20 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `mydb`.`documents`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `documents` (
-  `document_id` INT NOT NULL,
+  `id` INT AUTO_INCREMENT NOT NULL,
   `user_id` INT NOT NULL,
-  `document_title` VARCHAR(100) NOT NULL,
-  `document_content` TEXT NULL,
-  `document_createdOn` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-  `document_updatedOn` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE NOW() NOT NULL,
-  `document_privacy` ENUM("PUBLIC", "PRIVATE") NOT NULL,
-  PRIMARY KEY (`document_id`),
-  UNIQUE INDEX `id_UNIQUE` (`document_id` ASC) VISIBLE,
-  INDEX `documents.user_id_idx` (`user_id` ASC) VISIBLE,
-  CONSTRAINT `documents.user_id`
+  `title` VARCHAR(100) NOT NULL,
+  `imageUrl` TEXT DEFAULT NULL, 
+  `content` TEXT NULL,
+  `createdOn` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  `updatedOn` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE NOW() NOT NULL,
+  `privacy` ENUM("PUBLIC", "PRIVATE") NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `documents.id_idx` (`id` ASC) VISIBLE,
+  CONSTRAINT `fk_user`
     FOREIGN KEY (`user_id`)
-    REFERENCES `mydb`.`users` (`user_id`)
+    REFERENCES `users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
