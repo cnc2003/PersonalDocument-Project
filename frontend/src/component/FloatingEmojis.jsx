@@ -69,11 +69,11 @@ const FloatingEmojis = () => {
   }, []);
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden bg-[#F9F6EE] opacity-80">
+    <div className="relative w-screen h-screen overflow-hidden bg-[#F9F6EE] ">
       {emojis.map((emoji, index) => (
         <div
           key={index}
-          className="absolute w-14 h-14 bg-gray-400 bg-opacity-10 rounded-lg flex items-center justify-center text-3xl animate-float"
+          className="absolute w-14 h-14 bg-gray-400 bg-opacity-10 opacity-80 rounded-lg flex items-center justify-center text-3xl animate-float"
           style={{top: position[index]?.top, left: position[index]?.left, animationDelay: position[index]?.animationDelay, animationDuration: position[index]?.animationDuration}}
         >
           {emoji}

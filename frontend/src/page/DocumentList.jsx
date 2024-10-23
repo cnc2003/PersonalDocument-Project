@@ -3,6 +3,7 @@ import "../App.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { timeAgo } from "../util/util";
+import FloatingEmojis from "../component/FloatingEmojis";
 
 const DocumentList = () => {
   const [documents, setDocuments] = useState([]);
@@ -29,6 +30,8 @@ const DocumentList = () => {
 
   return (
     <div className="">
+      {/* <FloatingEmojis /> */}
+      <span className="bg-[#F9F6EE] w-screen h-screen fixed -z-10"></span>
       <div className="layout">
         <div className="header flex flex-col">
           <h1 className="text-4xl font-bold pt-[10rem]">Documentary List</h1>
@@ -52,7 +55,7 @@ const DocumentList = () => {
                 <span className="bg-slate-400 w-full h-4/6 bg-opacity-40"></span>
               )}
               <span className="relative text-5xl -mt-8 ml-6 ">
-                {String.fromCodePoint(0x1f600 + Math.floor(Math.random() * 80))}
+                {document.emoji ? document.emoji : "📄"}
               </span>
               <div className="mt-2 mx-8">
                 <h2 className="text-lg font-bold text-gray-800 break-words">
