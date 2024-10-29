@@ -31,16 +31,16 @@ const NavBar = () => {
 
   return (
     <div
-      className={`h-screen bg-white text-neutral-800 shadow-inner transition-width duration-300 z-10 ${
+      className={`h-screen bg-white bg-opacity-60 text-neutral-800 transition-width duration-300 z-10 ${
         isExpanded ? "w-64" : "w-16"
       }`}
     >
       {/* <button onClick={() => setIsExpanded(!isExpanded)}>AAA</button> */}
-      <div className="">
-        <div className="user-info mx-[8px] my-[6px] flex gap-2 items-center">
+      <div name="nav" className="">
+        <div className="user-info mx-[8px] pt-2 flex gap-2 items-center">
           <div className="flex px-[8px] py-[4px]">
             <div className="bg-slate-300 rounded-xl size-10 mr-[8px]"></div>
-            <div>
+            <div className="cursor-pointer">
               <p className="text-sm font-semibold">{username}</p>
               <p className="text-xs">{email}</p>
             </div>
@@ -55,12 +55,12 @@ const NavBar = () => {
 
         <hr class="w-auto h-1 mx-[10px] my-[4px] bg-gray-100 border-0 rounded " />
 
-        <div name="document-list" className="flex flex-col gap-1 mx-[8px] ">
+        <div name="document-list" className="flex flex-col gap-1 mx-[8px]">
           <div className="px-[8px] font-semibold">Documents</div>
           {documents.map((document) => (
             <div
               key={document.id}
-              className="flex gap-2 px-[8px] py-[4px] text-neutral-600 hover:cursor-pointer hover:bg-slate-500 hover:bg-opacity-10 rounded-md "
+              className="flex gap-2 px-[8px] py-[4px] text-neutral-600 hover:cursor-pointer hover:bg-slate-500 hover:bg-opacity-10 rounded-md transition duration-100"
             >
               <span>{document.emoji ? document.emoji : "📄"}</span>
               <span>{document.title}</span>

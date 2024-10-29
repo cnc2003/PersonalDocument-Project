@@ -10,3 +10,19 @@
   @apply bg-gray-500 hover:bg-gray-700 bg-opacity-30 text-white font-bold py-1 px-4 rounded;
 }
 
+.waffle-bg {
+  background-color: #f9f6ee;
+  opacity: 0.6;
+  background-image: linear-gradient(#ffe4ad 3.7px, transparent 3.7px),
+    linear-gradient(to right, #ffe4ad 3.7px, #f9f6ee 3.7px);
+  background-size: 74px 74px;
+}
+
+.dot-bg {
+  background-color: #f9f6ee;
+  opacity: 0.6;
+  background-image: radial-gradient(#ffe4ad 1.85px, transparent 1.85px),
+    radial-gradient(#ffe4ad 1.85px, #f9f6ee 1.85px);
+  background-size: 74px 74px;
+  background-position: 0 0, 37px 37px;
+}
