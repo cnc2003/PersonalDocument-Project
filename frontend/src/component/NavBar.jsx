@@ -1,19 +1,32 @@
 // NavBar.jsx
 import React, { useState, useEffect } from "react";
 import "../App.css";
+import axios from "axios";
 
 const NavBar = () => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
   const [documents, setDocuments] = useState([]);
   const username = localStorage.getItem("username");
   const email = localStorage.getItem("email");
 
+  const getDocuments = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/documents`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // JWT token
+        },
+        withCredentials: true, // Ensure credentials are sent
+      });
+      setDocuments(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
-    // Fetch document list from backend
-    fetch("/api/documents")
-      .then((response) => response.json())
-      .then((data) => setDocuments(data))
-      .catch((error) => console.error("Error fetching documents:", error));
+    getDocuments();
+    console.log(documents);
   }, []);
 
   return (
@@ -22,37 +35,37 @@ const NavBar = () => {
         isExpanded ? "w-64" : "w-16"
       }`}
     >
-      <button onClick={() => setIsExpanded(!isExpanded)}>AAA</button>
-      <div className="p-4">
-        <div className="user-info mb-4 flex items-center">
-          <i className="fas fa-user mr-2"></i>
-          {isExpanded && (
+      {/* <button onClick={() => setIsExpanded(!isExpanded)}>AAA</button> */}
+      <div className="">
+        <div className="user-info mx-[8px] my-[6px] flex gap-2 items-center">
+          <div className="flex px-[8px] py-[4px]">
+            <div className="bg-slate-300 rounded-xl size-10 mr-[8px]"></div>
             <div>
-              <p className="text-sm">{username}</p>
+              <p className="text-sm font-semibold">{username}</p>
               <p className="text-xs">{email}</p>
             </div>
-          )}
+          </div>
+          <div className="ml-auto pr-2">
+            <img
+              src="/public/edit_square.svg"
+              className="hover:cursor-pointer hover:scale-105 transition"
+            ></img>
+          </div>
         </div>
-        <div className="document-list mb-4">
-          <h3 className="text-sm">{isExpanded && "Documents"}</h3>
-          <ul className="text-xs">
-            {documents.map((doc) => (
-              <li key={doc.id} className="flex items-center">
-                <i className="fas fa-file-alt mr-2"></i>
-                {isExpanded && doc.title}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="sidebar-buttons">
-          <button className="w-full text-left text-sm mb-2 flex items-center">
-            <i className="fas fa-cog mr-2"></i>
-            {isExpanded && "Settings"}
-          </button>
-          <button className="w-full text-left text-sm flex items-center">
-            <i className="fas fa-question-circle mr-2"></i>
-            {isExpanded && "Help"}
-          </button>
+
+        <hr class="w-auto h-1 mx-[10px] my-[4px] bg-gray-100 border-0 rounded " />
+
+        <div name="document-list" className="flex flex-col gap-1 mx-[8px] ">
+          <div className="px-[8px] font-semibold">Documents</div>
+          {documents.map((document) => (
+            <div
+              key={document.id}
+              className="flex gap-2 px-[8px] py-[4px] text-neutral-600 hover:cursor-pointer hover:bg-slate-500 hover:bg-opacity-10 rounded-md "
+            >
+              <span>{document.emoji ? document.emoji : "📄"}</span>
+              <span>{document.title}</span>
+            </div>
+          ))}
         </div>
       </div>
     </div>

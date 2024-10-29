@@ -9,25 +9,4 @@
 .btn {
   @apply bg-gray-500 hover:bg-gray-700 bg-opacity-30 text-white font-bold py-1 px-4 rounded;
 }
-.layout {
-  overflow: hidden;
-  width: 100%;
-  display: grid;
-  grid:
-    ". header ." auto
-    "leftSide body rightSide" auto
-    / auto 80% auto;
-}
 
-.header {
-  grid-area: header;
-}
-.leftSide {
-  grid-area: leftSide;
-}
-.body {
-  grid-area: body;
-}
-.rightSide {
-  grid-area: rightSide;
-}

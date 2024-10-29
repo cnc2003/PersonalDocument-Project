@@ -33,9 +33,12 @@ const DocumentList = () => {
     <div className="">
       {/* <FloatingEmojis /> */}
       <span className="bg-[#F9F6EE] w-screen h-screen fixed -z-10"></span>
-      <div className="flex flex-row items-start">
+      <div className="flex flex-row">
+        <div className="">
         <NavBar />
-        <div className="layout">
+        </div>
+
+        <div className="flex flex-col sm:mx-[8rem] mx-[3rem]">
           <div className="header flex flex-col">
             <h1 className="text-4xl font-bold pt-[10rem]">Documentary List</h1>
             <p className="text-neutral-500 italic">Let's write your journal.</p>
