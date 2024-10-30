@@ -2,13 +2,14 @@
 import React, { useState, useEffect } from "react";
 import "../App.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
   const [isExpanded, setIsExpanded] = useState(true);
   const [documents, setDocuments] = useState([]);
   const username = localStorage.getItem("username");
   const email = localStorage.getItem("email");
-
+  const navigate = useNavigate();
   const getDocuments = async () => {
     try {
       const response = await axios.get(`http://localhost:8080/documents`, {
@@ -22,7 +23,7 @@ const NavBar = () => {
     } catch (error) {
       if (error.response.status === 401) {
         localStorage.clear();
-        window.location.href = "/signin";
+        navigate("/signin");
       }
     }
   };
@@ -55,7 +56,7 @@ const NavBar = () => {
           </div>
         </div>
 
-        <hr class="w-auto h-1 mx-[10px] my-[4px] bg-gray-100 border-0 rounded " />
+        <hr className="w-auto h-1 mx-[10px] my-[4px] bg-gray-100 border-0 rounded " />
 
         <div name="document-list" className="flex flex-col gap-1 mx-[8px]">
           <div className="px-[8px] font-semibold">Documents</div>
@@ -63,6 +64,7 @@ const NavBar = () => {
             <div
               key={document.id}
               className="flex gap-2 px-[8px] py-[4px] text-neutral-600 hover:cursor-pointer hover:bg-slate-500 hover:bg-opacity-10 rounded-md transition duration-100"
+              onClick={() => navigate(`/${username}/document/${document.id}`)}
             >
               <span>{document.emoji ? document.emoji : "📄"}</span>
               <span>{document.title}</span>

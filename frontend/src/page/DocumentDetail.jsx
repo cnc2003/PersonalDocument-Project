@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import NavBar from "../component/NavBar";
 import axios from "axios";
 import MDEditor from "../component/MDEditor";
@@ -7,6 +7,8 @@ import MDEditor from "../component/MDEditor";
 const DocumentDetail = () => {
   const { username, documentId } = useParams();
   const [document, setDocument] = useState({});
+  const [isloading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
   const fetchDocument = async () => {
     try {
       const response = await axios.get(
@@ -23,14 +25,18 @@ const DocumentDetail = () => {
     } catch (error) {
       if (error.response.status === 401) {
         localStorage.clear();
-        window.location.href = "/signin";
+        navigate("/signin");
       }
     }
   };
 
   useEffect(() => {
-    fetchDocument();
-  }, []);
+    async function fetchData() {
+      await fetchDocument();
+      setIsLoading(false);
+    }
+    fetchData();
+  }, [documentId]);
 
   return (
     <div className="">
@@ -47,9 +53,11 @@ const DocumentDetail = () => {
                 {document.title}
               </h1>
             </div>
-            <div className="">
-                <MDEditor />
-            </div>
+            {!isloading && (
+              <div className="">
+                <MDEditor content={document.content} />
+              </div>
+            )}
           </div>
         </section>
       </div>

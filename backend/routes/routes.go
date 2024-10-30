@@ -31,6 +31,7 @@ func SetupRouter() *gin.Engine {
 		documentRoutes.POST("", controllers.CreateDocument)
 		documentRoutes.GET("", controllers.GetDocuments)
 		documentRoutes.GET("/:id", controllers.GetDocumentByID)
+		documentRoutes.PATCH("/:id", controllers.PatchDocumentContent)
 		documentRoutes.PUT("/:id", controllers.UpdateDocument)
 		documentRoutes.DELETE("/:id", controllers.DeleteDocument)
 	}

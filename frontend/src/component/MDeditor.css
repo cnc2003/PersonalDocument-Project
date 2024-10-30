@@ -3,5 +3,6 @@
 @tailwind utilities;
 
 .tiptap.ProseMirror {
-    @apply outline-none
+    @apply outline-none text-wrap break-words
+    
 }

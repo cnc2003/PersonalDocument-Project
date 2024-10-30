@@ -74,6 +74,33 @@ func UpdateDocument(c *gin.Context) {
 	c.JSON(http.StatusOK, document)
 }
 
+func PatchDocumentContent(c *gin.Context) {
+	userID := c.GetInt("user_id")
+	documentID, _ := strconv.Atoi(c.Param("id"))
+
+	var document models.Document
+	if err := config.DB.Where("id = ? AND user_id = ?", documentID, userID).First(&document).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Document not found"})
+		return
+	}
+
+	var input struct {
+		Content string `json:"content"`
+	}
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	document.Content = input.Content
+	if err := config.DB.Save(&document).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update document content"})
+		return
+	}
+
+	c.JSON(http.StatusOK, document)
+}
+
 func DeleteDocument(c *gin.Context) {
 	userID := c.GetInt("user_id")
 	documentID, _ := strconv.Atoi(c.Param("id"))
