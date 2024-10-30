@@ -11,6 +11,7 @@ import SignIn from './page/SignIn.jsx';
 import SignUp from './page/SignUp.jsx';
 import DocumentList from './page/DocumentList.jsx';
 import Playground from './page/Playground.jsx';
+import DocumentDetail from './page/DocumentDetail.jsx';
 
 const router = createBrowserRouter([
   {
@@ -28,7 +29,12 @@ const router = createBrowserRouter([
   {
     path: "/:username/document",
     element: <DocumentList />,
-  },{
+  },
+  {
+    path: "/:username/document/:documentId",
+    element: <DocumentDetail />,
+  }
+  ,{
     path: "/playground",
     element: <Playground />
   }

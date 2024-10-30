@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../App.css";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { timeAgo } from "../util/util";
 import FloatingEmojis from "../component/FloatingEmojis";
@@ -9,6 +9,7 @@ import NavBar from "../component/NavBar";
 const DocumentList = () => {
   const [documents, setDocuments] = useState([]);
   const { username } = useParams();
+  const navigate = useNavigate();
 
   const getDocuments = async () => {
     try {
@@ -47,29 +48,30 @@ const DocumentList = () => {
                 Let's write your journal.
               </p>
               <div className="h-12 flex flex-row items-end">
-                <button className="btn">New</button>
+                <button className="btn bg-orange-300 hover:bg-orange-400">New</button>
               </div>
             </div>
             <div className="pt-4 flex flex-row gap-6 flex-wrap">
               {documents.map((document) => (
                 <div
                   key={document.id}
-                  className="bg-white group shadow-md rounded-3xl box-border h-52 w-64 overflow-hidden flex flex-col hover:shadow-lg hover:scale-105 hover:rotate-2 hover:border-neutral-900 hover:border-4 hover:bg-neutral-100 transition ease-in-out duration-300 hover:cursor-[url(/public/mouse_click.svg),_pointer]"
+                  className="bg-white group shadow-md rounded-3xl box-border h-52 w-64 overflow-hidden flex flex-col hover:shadow-lg hover:scale-105 hover:rotate-2 hover:border-amber-400 hover:border-4 hover:bg-amber-100 transition ease-in-out duration-300 hover:cursor-[url(/public/mouse_click.svg),_pointer]"
+                  onClick={() => navigate(`/${username}/document/${document.id}`)}
                 >
                   {document.imageUrl && (
                     <img
                       src={document.imageUrl}
-                      className="w-full group-hover:border-b-4 group-hover:border-neutral-900 h-4/6 object-cover rounded-t-lg"
+                      className="w-full group-hover:border-b-4 group-hover:border-amber-400 h-4/6 object-cover rounded-t-lg"
                     />
                   )}
                   {!document.imageUrl && (
-                    <span className="group-hover:border-b-4 group-hover:border-neutral-900 bg-neutral-400 w-full h-4/6 bg-opacity-40"></span>
+                    <span className="group-hover:border-b-4 group-hover:border-amber-400 bg-neutral-400 w-full h-4/6 bg-opacity-40"></span>
                   )}
                   <span className="relative text-4xl -mt-6 ml-6">
                     {document.emoji ? document.emoji : "📄"}
                   </span>
-                  <div className="mx-8">
-                    <h2 className=" font-bold text-gray-800 break-words">
+                  <div className="mx-8 ">
+                    <h2 className=" group-hover:text-orange-500 font-bold text-gray-800 break-words transition">
                       {document.title}
                     </h2>
                     <span className="text-neutral-500">

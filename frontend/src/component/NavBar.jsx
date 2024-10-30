@@ -20,13 +20,15 @@ const NavBar = () => {
       });
       setDocuments(response.data);
     } catch (error) {
-      console.error(error);
+      if (error.response.status === 401) {
+        localStorage.clear();
+        window.location.href = "/signin";
+      }
     }
   };
 
   useEffect(() => {
     getDocuments();
-    console.log(documents);
   }, []);
 
   return (
