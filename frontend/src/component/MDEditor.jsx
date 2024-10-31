@@ -18,7 +18,7 @@ const MDEditor = () => {
   const turndownService = new TurndownService();
 
   const editor = useEditor({
-    autofocus: true,
+    autofocus: false,
     extensions: [StarterKit],
     content: md.render(content),
     onUpdate: ({ editor }) => {
@@ -54,12 +54,13 @@ const MDEditor = () => {
       const renderedContent = md.render(content);
       setEditorState(renderedContent);
       editor.commands.setContent(renderedContent);
+      console.log(md.render(content));
     }
   }, [content, documentId, editor]);
 
   return (
-    <div className="flex flex-col gap-2">
-      <div>{editor && <MDmenubar editor={editor} />}</div>
+    <div className="flex flex-col gap-2 pb-10">
+      <div className="sticky top-4 z-10">{editor && <MDmenubar editor={editor} />}</div>
       <div className="editor-container">
         {editor && <EditorContent editor={editor} />}
       </div>

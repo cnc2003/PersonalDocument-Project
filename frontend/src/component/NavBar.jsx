@@ -54,6 +54,10 @@ const NavBar = () => {
     setIsExpanded(!isExpanded);
   };
 
+  const handlerSignout = () => {
+    navigate("/signin");
+  }
+
   return (
     <div
       className={`h-screen bg-white bg-opacity-60 text-neutral-800 transition-width duration-300 z-10 ${
@@ -65,7 +69,9 @@ const NavBar = () => {
       <div name="nav" className="flex flex-col gap-2">
         <div className="user-info mx-[8px] pt-2 flex gap-2 items-center">
           <div className={`flex px-[6px] py-[4px] justify-center ${isExpanded ? '' : 'px-[4px]'}`}>
-            <div className={`bg-slate-300 rounded-xl size-10 mr-[8px] ${isExpanded ? "" : "mr-0"}`}></div>
+            <div className={`bg-neutral-300 rounded-xl size-10 mr-[8px] flex items-center justify-center ${isExpanded ? "" : "mr-0"}`}>
+              <img src="/public/userface.svg" className="size-8"/>
+            </div>
             <div className={`${isExpanded ? "" : "hidden"}`}>
               <p className="text-sm font-semibold">{username}</p>
               <p className="text-xs">{email}</p>
@@ -118,7 +124,7 @@ const NavBar = () => {
         <div className="mx-[8px] flex gap-2">
           <div
             className={`flex gap-2 w-full font-semibold bg-red-100 px-[8px] py-[4px] text-neutral-600 hover:cursor-pointer hover:bg-red-200 rounded-md transition duration-100 ${isExpanded ? "" : "justify-center"}`}
-            onClick={handleHomeClick}
+            onClick={handlerSignout}
           >
             <img src="/public/logout.svg" />
             <span className={`${isExpanded ? "" : "hidden"}`}>Signout</span>

@@ -3,6 +3,7 @@ import {
   Bold,
   Code,
   CodepenIcon,
+  CodeSquare,
   CrossIcon,
   Heading1,
   Heading2,
@@ -19,10 +20,11 @@ import {
   Underline,
   Undo,
 } from "lucide-react";
+import './MDEditor.css';
 
 const MDmenubar = ({ editor }) => {
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap w-fit gap-2 bg-white rounded-lg px-2 py-1 border-2 border-neutral-900">
       <button
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editor.can().chain().focus().toggleBold().run()}
@@ -45,13 +47,6 @@ const MDmenubar = ({ editor }) => {
         <Strikethrough />
       </button>
 
-      <button
-        onClick={() => editor.chain().focus().toggleCode().run()}
-        disabled={!editor.can().chain().focus().toggleCode().run()}
-        className={editor.isActive("code") ? "is-active" : ""}
-      >
-        <Code className="w-6 h-6" />
-      </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
         className={editor.isActive("heading", { level: 1 }) ? "is-active" : ""}
@@ -104,7 +99,13 @@ const MDmenubar = ({ editor }) => {
         onClick={() => editor.chain().focus().toggleCodeBlock().run()}
         className={editor.isActive("codeBlock") ? "is-active" : ""}
       >
-        <CodepenIcon className="w-6 h-6" />
+        <CodeSquare className="w-6 h-6" />
+      </button>
+      <button
+        onClick={() => editor.chain().focus().toggleCode().run()}
+        className={editor.isActive("code") ? "is-active" : ""}
+      >
+        <Code className="w-6 h-6" />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleBlockquote().run()}

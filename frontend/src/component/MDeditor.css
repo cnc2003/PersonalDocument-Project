@@ -4,5 +4,75 @@
 
 .tiptap.ProseMirror {
     @apply outline-none text-wrap break-words
-    
+}
+
+.is-active {
+    @apply bg-slate-800 text-white rounded-md px-[2px]
+}
+
+h1 {
+    @apply text-3xl font-bold
+}
+h2 {
+    @apply text-2xl font-semibold
+}
+
+h3 {
+    @apply text-xl font-medium
+}
+
+h4 {
+    @apply text-lg font-medium
+}
+
+h5 {
+    @apply text-base font-medium
+}
+
+h6 {
+    @apply text-sm font-medium
+}
+
+p {
+    @apply mb-2
+}
+
+ul {
+    @apply list-disc pl-5 mb-4
+}
+
+ol {
+    @apply list-decimal pl-5 mb-4
+}
+
+li {
+    @apply mb-2
+}
+
+blockquote {
+    @apply border-l-4 border-slate-900 pl-2 italic text-neutral-600 
+}
+
+code {
+    @apply bg-slate-900 text-white p-1 px-2 rounded-md
+}
+
+pre {
+    @apply bg-slate-800 p-4 rounded overflow-x-auto
+}
+
+table {
+    @apply w-full border-collapse mb-4
+}
+
+thead {
+    @apply bg-gray-200
+}
+
+th, td {
+    @apply border px-4 py-2
+}
+
+th {
+    @apply font-semibold
 }
