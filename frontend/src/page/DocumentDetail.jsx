@@ -3,6 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import NavBar from "../component/NavBar";
 import axios from "axios";
 import MDEditor from "../component/MDEditor";
+import { createContext } from "react";
+
+export const DocumentContent = createContext(null);
 
 const DocumentDetail = () => {
   const { username, documentId } = useParams();
@@ -55,7 +58,9 @@ const DocumentDetail = () => {
             </div>
             {!isloading && (
               <div className="">
-                <MDEditor content={document.content} />
+                <DocumentContent.Provider value={document}>
+                  <MDEditor/>
+                </DocumentContent.Provider>
               </div>
             )}
           </div>

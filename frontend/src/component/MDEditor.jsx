@@ -1,35 +1,36 @@
-import { EditorContent, useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import { useEffect, useState } from "react";
-import "./MDEditor.css";
-import MDmenubar from "./MDmenubar";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Underline } from "lucide-react";
 import MarkdownIt from "markdown-it";
 import TurndownService from "turndown";
+import { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useEditor, EditorContent } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import { DocumentContent } from "../page/DocumentDetail";
+import "./MDEditor.css";
+import MDmenubar from "./MDmenubar";
 
-const MDEditor = ({ content }) => {
-  const [editorState, setEditorState] = useState({ content: "" });
+const MDEditor = () => {
+  const { content } = useContext(DocumentContent);
+  const [editorState, setEditorState] = useState("");
   const { documentId } = useParams();
   const md = new MarkdownIt();
   const turndownService = new TurndownService();
 
   const editor = useEditor({
     autofocus: true,
-    extensions: [StarterKit, Underline],
+    extensions: [StarterKit],
     content: md.render(content),
     onUpdate: ({ editor }) => {
       setEditorState(editor.getHTML());
-      updateContent();
-      console.log(turndownService.turndown(editorState));
+      updateContent(editor.getHTML());
     },
   });
 
-  const updateContent = async () => {
+  const updateContent = async (content) => {
     try {
-      const mdContent = turndownService.turndown(editorState);
-      const response = await axios.patch(
+      const mdContent = turndownService.turndown(content);
+      await axios.patch(
         `http://localhost:8080/documents/${documentId}`,
         {
           content: mdContent,
@@ -42,14 +43,19 @@ const MDEditor = ({ content }) => {
           withCredentials: true,
         }
       );
+      // return console.log(mdContent);
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
-    setEditorState(md.render(content));
-  }, [content]);
+    if (editor) {
+      const renderedContent = md.render(content);
+      setEditorState(renderedContent);
+      editor.commands.setContent(renderedContent);
+    }
+  }, [content, documentId, editor]);
 
   return (
     <div className="flex flex-col gap-2">
