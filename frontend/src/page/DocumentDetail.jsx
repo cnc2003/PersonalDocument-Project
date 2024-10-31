@@ -16,13 +16,16 @@ const DocumentDetail = () => {
 
   const fetchDocument = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/documents/${documentId}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        `http://localhost:8080/documents/${documentId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          withCredentials: true,
+        }
+      );
       setDocument(response.data);
       setTitle(response.data.title);
       setIsLoading(false);
@@ -31,9 +34,10 @@ const DocumentDetail = () => {
     }
   };
 
-  const handleTitleChange = (e) => {    updateTitle()
+  const handleTitleChange = (e) => {
+    updateTitle();
     setTitle(e.target.value);
-    updateTitle()
+    updateTitle();
   };
 
   const updateTitle = async () => {
@@ -66,13 +70,21 @@ const DocumentDetail = () => {
           <NavBar />
         </aside>
         <section className="h-screen w-full overflow-y-auto">
+          {document.imageUrl && (
+            <div className="w-full h-64 overflow-hidden">
+              <img src={document.imageUrl} className="w-full object-cover" />
+            </div>
+          )}
+          <div className={`md:mx-[8rem] mx-[3rem] ${ document.imageUrl ? '' :'pt-[10rem]' }`}>
+            <div className="text-6xl -mt-9">{document.emoji ? document.emoji : '📄'}</div>
+          </div>
           <div className="flex flex-col md:mx-[8rem] mx-[3rem] gap-4">
-            <div className="flex flex-col">
+            <div className="">
               <input
                 type="text"
                 value={title}
-                onChange={handleTitleChange}            
-                className="w-full text-4xl font-bold pt-[10rem] bg-transparent border-none focus:outline-none break-words text-wrap"
+                onChange={handleTitleChange}
+                className="w-full text-4xl font-bold pt-[2rem] bg-transparent border-none focus:outline-none break-words text-wrap"
               />
             </div>
             {!isLoading && (
