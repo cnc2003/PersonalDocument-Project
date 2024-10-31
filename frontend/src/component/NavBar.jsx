@@ -38,12 +38,12 @@ const NavBar = () => {
         isExpanded ? "w-64" : "w-16"
       }`}
     >
-      {/* <button onClick={() => setIsExpanded(!isExpanded)}>AAA</button> */}
+      <button onClick={() => setIsExpanded(!isExpanded)}>AAA</button>
       <div name="nav" className="">
         <div className="user-info mx-[8px] pt-2 flex gap-2 items-center">
           <div className="flex px-[8px] py-[4px]">
             <div className="bg-slate-300 rounded-xl size-10 mr-[8px]"></div>
-            <div className="cursor-pointer">
+            <div className={`${isExpanded ? "" : "hidden"}`}>
               <p className="text-sm font-semibold">{username}</p>
               <p className="text-xs">{email}</p>
             </div>
@@ -57,9 +57,18 @@ const NavBar = () => {
         </div>
 
         <hr className="w-auto h-1 mx-[10px] my-[4px] bg-gray-100 border-0 rounded " />
-
+        <div className="mx-[8px] flex gap-2">
+          <div className="flex gap-2 w-full font-semibold bg-amber-100 px-[8px] py-[4px] text-neutral-600 hover:cursor-pointer hover:bg-amber-200 rounded-md transition duration-100">
+            <img src="/public/home.svg" />
+            <span className={`${isExpanded ? "" : "hidden"}`}>Home</span>
+          </div>
+        </div>
         <div name="document-list" className="flex flex-col gap-1 mx-[8px]">
-          <div className="px-[8px] font-semibold">Documents</div>
+          <div
+            className={`px-[8px] font-semibold ${isExpanded ? "" : "hidden"}`}
+          >
+            Documents
+          </div>
           {documents.map((document) => (
             <div
               key={document.id}
@@ -67,7 +76,9 @@ const NavBar = () => {
               onClick={() => navigate(`/${username}/document/${document.id}`)}
             >
               <span>{document.emoji ? document.emoji : "📄"}</span>
-              <span>{document.title}</span>
+              <span className={isExpanded ? "" : "hidden"}>
+                {document.title}
+              </span>
             </div>
           ))}
         </div>
