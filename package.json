@@ -3,6 +3,7 @@
     "@tiptap/pm": "^2.9.1",
     "@tiptap/react": "^2.9.1",
     "@tiptap/starter-kit": "^2.9.1",
+    "lenis": "^1.1.14",
     "lodash.debounce": "^4.0.8",
     "markdown-it": "^14.1.0",
     "turndown": "^7.2.0"

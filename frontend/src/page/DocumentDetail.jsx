@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import NavBar from "../component/NavBar";
+import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect, createContext, useCallback } from "react";
 import axios from "axios";
+import NavBar from "../component/NavBar";
 import MDEditor from "../component/MDEditor";
-import { createContext } from "react";
+import debounce from "lodash.debounce";
 
 export const DocumentContent = createContext(null);
 
@@ -16,16 +16,13 @@ const DocumentDetail = () => {
 
   const fetchDocument = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:8080/documents/${documentId}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          withCredentials: true,
-        }
-      );
+      const response = await axios.get(`http://localhost:8080/documents/${documentId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        withCredentials: true,
+      });
       setDocument(response.data);
       setTitle(response.data.title);
       setIsLoading(false);
@@ -35,16 +32,15 @@ const DocumentDetail = () => {
   };
 
   const handleTitleChange = (e) => {
-    updateTitle();
     setTitle(e.target.value);
-    updateTitle();
+    debouncedUpdateTitle(e.target.value);
   };
 
-  const updateTitle = async () => {
+  const updateTitle = async (newTitle) => {
     try {
       await axios.patch(
         `http://localhost:8080/documents/${documentId}`,
-        { title },
+        { title: newTitle },
         {
           headers: {
             "Content-Type": "application/json",
@@ -58,8 +54,11 @@ const DocumentDetail = () => {
     }
   };
 
+  const debouncedUpdateTitle = useCallback(debounce(updateTitle, 1000), []);
+
   useEffect(() => {
     fetchDocument();
+    window.scrollTo(0, 0); // Scroll to the top when the component mounts or documentId changes
   }, [documentId]);
 
   return (
@@ -75,16 +74,17 @@ const DocumentDetail = () => {
               <img src={document.imageUrl} className="w-full object-cover" />
             </div>
           )}
-          <div className={`md:mx-[8rem] mx-[3rem] ${ document.imageUrl ? '' :'pt-[10rem]' }`}>
+          <div className={`md:mx-[8rem] mx-[3rem] ${document.imageUrl ? '' : 'pt-[10rem]'}`}>
             <div className="text-6xl -mt-9">{document.emoji ? document.emoji : '📄'}</div>
           </div>
           <div className="flex flex-col md:mx-[8rem] mx-[3rem] gap-4">
             <div className="">
-              <input
-                type="text"
+              <textarea
                 value={title}
                 onChange={handleTitleChange}
-                className="w-full text-4xl font-bold pt-[2rem] bg-transparent border-none focus:outline-none break-words text-wrap"
+                className="w-full text-4xl font-bold pt-[2rem] bg-transparent border-none focus:outline-none resize-none overflow-hidden"
+                rows="1"
+                style={{ whiteSpace: "pre-wrap" }}
               />
             </div>
             {!isLoading && (
