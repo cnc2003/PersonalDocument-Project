@@ -5,11 +5,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [documents, setDocuments] = useState([]);
   const username = localStorage.getItem("username");
   const email = localStorage.getItem("email");
   const navigate = useNavigate();
+
   const getDocuments = async () => {
     try {
       const response = await axios.get(`http://localhost:8080/documents`, {
@@ -35,10 +36,11 @@ const NavBar = () => {
   return (
     <div
       className={`h-screen bg-white bg-opacity-60 text-neutral-800 transition-width duration-300 z-10 ${
-        isExpanded ? "w-64" : "w-16"
+        isExpanded ? "w-64" : "w-16 hover:w-64"
       }`}
+      onMouseEnter={() => setIsExpanded(true)}
+      onMouseLeave={() => setIsExpanded(false)}
     >
-      <button onClick={() => setIsExpanded(!isExpanded)}>AAA</button>
       <div name="nav" className="">
         <div className="user-info mx-[8px] pt-2 flex gap-2 items-center">
           <div className="flex px-[8px] py-[4px]">
