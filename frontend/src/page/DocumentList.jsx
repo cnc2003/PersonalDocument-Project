@@ -31,14 +31,14 @@ const DocumentList = () => {
   }, []);
 
   return (
-    <div className="">
+    <div className="sticky">
       {/* <FloatingEmojis /> */}
       <span className="bg- [#F9F6EE] waffle-bg w-screen h-screen fixed -z-10"></span>
       <div className="flex flex-row">
-        <aside className="w-64 fixed">
+        <aside className="sticky">
           <NavBar />
         </aside>
-        <section className="ml-64">
+        <section className="h-screen overflow-y-scroll pb-8">
           <div className="flex flex-col md:mx-[8rem] mx-[3rem]">
             <div className="flex flex-col">
               <h1 className="text-4xl font-bold pt-[10rem]">
@@ -67,7 +67,7 @@ const DocumentList = () => {
                   {!document.imageUrl && (
                     <span className="group-hover:border-b-4 group-hover:border-amber-400 bg-neutral-400 w-full h-4/6 bg-opacity-40"></span>
                   )}
-                  <span className="relative text-4xl -mt-6 ml-6">
+                  <span className="text-4xl -mt-6 ml-6">
                     {document.emoji ? document.emoji : "📄"}
                   </span>
                   <div className="mx-8 ">

@@ -2,14 +2,16 @@
 import React, { useState, useEffect } from "react";
 import "../App.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const NavBar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isLockExpanded, setIsLockExpanded] = useState(false);
   const [documents, setDocuments] = useState([]);
   const username = localStorage.getItem("username");
   const email = localStorage.getItem("email");
   const navigate = useNavigate();
+  const {documentId} = useParams();
 
   const getDocuments = async () => {
     try {
@@ -33,56 +35,94 @@ const NavBar = () => {
     getDocuments();
   }, []);
 
+  const handleHomeClick = () => {
+    navigate(`/${username}/document`);
+  };
+
+  const handleDocumentClick = (id) => {
+    navigate(`/${username}/document/${id}`);
+  };
+
+  const handleHover = (boolean) => {
+    if (!isLockExpanded) {
+      setIsExpanded(boolean);
+    }
+  };
+
+  const handleLockClick = () => {
+    setIsLockExpanded(!isLockExpanded);
+    setIsExpanded(!isExpanded);
+  };
+
   return (
     <div
       className={`h-screen bg-white bg-opacity-60 text-neutral-800 transition-width duration-300 z-10 ${
         isExpanded ? "w-64" : "w-16 hover:w-64"
       }`}
-      onMouseEnter={() => setIsExpanded(true)}
-      onMouseLeave={() => setIsExpanded(false)}
+      onMouseEnter={() => handleHover(true)}
+      onMouseLeave={() => handleHover(false)}
     >
-      <div name="nav" className="">
+      <div name="nav" className="flex flex-col gap-2">
         <div className="user-info mx-[8px] pt-2 flex gap-2 items-center">
-          <div className="flex px-[8px] py-[4px]">
-            <div className="bg-slate-300 rounded-xl size-10 mr-[8px]"></div>
+          <div className={`flex px-[6px] py-[4px] justify-center ${isExpanded ? '' : 'px-[4px]'}`}>
+            <div className={`bg-slate-300 rounded-xl size-10 mr-[8px] ${isExpanded ? "" : "mr-0"}`}></div>
             <div className={`${isExpanded ? "" : "hidden"}`}>
               <p className="text-sm font-semibold">{username}</p>
               <p className="text-xs">{email}</p>
             </div>
           </div>
-          <div className="ml-auto pr-2">
+          <div className={`ml-auto pr-2 flex gap-2 ${isExpanded ? "" : "hidden"}`}  >
+            {/* <div>
+              <img
+                src={
+                  isExpanded ? "/public/key_right.svg" : "/public/key_left.svg"
+                }
+                onClick={handleLockClick}
+              />
+            </div> */}
             <img
               src="/public/edit_square.svg"
               className="hover:cursor-pointer hover:scale-105 transition"
             ></img>
           </div>
         </div>
-
         <hr className="w-auto h-1 mx-[10px] my-[4px] bg-gray-100 border-0 rounded " />
         <div className="mx-[8px] flex gap-2">
-          <div className="flex gap-2 w-full font-semibold bg-amber-100 px-[8px] py-[4px] text-neutral-600 hover:cursor-pointer hover:bg-amber-200 rounded-md transition duration-100">
+          <div
+            className={`flex gap-2 w-full font-semibold bg-amber-100 px-[8px] py-[4px] text-neutral-600 hover:cursor-pointer hover:bg-amber-200 rounded-md transition duration-100 ${isExpanded ? "" : "justify-center"}`}
+            onClick={handleHomeClick}
+          >
             <img src="/public/home.svg" />
             <span className={`${isExpanded ? "" : "hidden"}`}>Home</span>
           </div>
         </div>
         <div name="document-list" className="flex flex-col gap-1 mx-[8px]">
-          <div
-            className={`px-[8px] font-semibold ${isExpanded ? "" : "hidden"}`}
-          >
-            Documents
+          <div className={`px-[8px] font-semibold `}>
+            {isExpanded ? "Documents" : <hr className="w-full h-1 my-[9px] bg-gray-100 border-0 rounded " />}
           </div>
-          {documents.map((document) => (
-            <div
-              key={document.id}
-              className="flex gap-2 px-[8px] py-[4px] text-neutral-600 hover:cursor-pointer hover:bg-slate-500 hover:bg-opacity-10 rounded-md transition duration-100"
-              onClick={() => navigate(`/${username}/document/${document.id}`)}
-            >
-              <span>{document.emoji ? document.emoji : "📄"}</span>
-              <span className={isExpanded ? "" : "hidden"}>
-                {document.title}
-              </span>
-            </div>
-          ))}
+          <div className="flex flex-col">
+            {documents.map((document) => (
+              <div
+                key={document.id}
+                className={`flex gap-2 px-[8px] py-[4px] text-neutral-600 hover:cursor-pointer hover:bg-slate-500 hover:bg-opacity-10 rounded-md transition duration-100 overflow-hidden ${isExpanded ? "" : "justify-center"} ${document.id == documentId  ? "bg-slate-500 bg-opacity-10" : ""}`}
+                onClick={() => handleDocumentClick(document.id)}
+              >
+                <span>{document.emoji ? document.emoji : "📄"}</span>
+                <span className={`text-nowrap ${isExpanded ? "" : "hidden"}`}>
+                  {document.title}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="mx-[8px] flex gap-2">
+          <div
+            className={`flex gap-2 w-full font-semibold bg-red-100 px-[8px] py-[4px] text-neutral-600 hover:cursor-pointer hover:bg-red-200 rounded-md transition duration-100 ${isExpanded ? "" : "justify-center"}`}
+            onClick={handleHomeClick}
+          >
+            <img src="/public/logout.svg" />
+            <span className={`${isExpanded ? "" : "hidden"}`}>Signout</span>
+          </div>
         </div>
       </div>
     </div>

@@ -46,10 +46,10 @@ const DocumentDetail = () => {
       {/* <FloatingEmojis /> */}
       <span className="bg-[#F9F6EE] w-screen h-screen fixed -z-10"></span>
       <div className="flex flex-row">
-        <aside className="w-64 fixed">
+        <aside className="">
           <NavBar />
         </aside>
-        <section className="ml-64">
+        <section className="h-screen overflow-y-auto">
           <div className="flex flex-col md:mx-[8rem] mx-[3rem] gap-4">
             <div className="flex flex-col">
               <h1 className="text-4xl font-bold pt-[10rem]">
