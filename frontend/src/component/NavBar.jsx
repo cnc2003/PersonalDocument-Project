@@ -66,26 +66,18 @@ const NavBar = () => {
       onMouseEnter={() => handleHover(true)}
       onMouseLeave={() => handleHover(false)}
     >
-      <div name="nav" className="flex flex-col gap-2">
+      <div name="nav" className="flex flex-col gap-1">
         <div className="user-info mx-[8px] pt-2 flex gap-2 items-center">
           <div className={`flex px-[6px] py-[4px] justify-center ${isExpanded ? '' : 'px-[4px]'}`}>
             <div className={`bg-neutral-300 rounded-xl size-10 mr-[8px] flex items-center justify-center ${isExpanded ? "" : "mr-0"}`}>
               <img src="/public/userface.svg" className="size-8"/>
             </div>
             <div className={`${isExpanded ? "" : "hidden"}`}>
-              <p className="text-sm font-semibold">{username}</p>
-              <p className="text-xs">{email}</p>
+              <p className="mb-0 text-sm font-semibold">{username}</p>
+              <p className="mb-0 text-xs">{email}</p>
             </div>
           </div>
           <div className={`ml-auto pr-2 flex gap-2 ${isExpanded ? "" : "hidden"}`}  >
-            {/* <div>
-              <img
-                src={
-                  isExpanded ? "/public/key_right.svg" : "/public/key_left.svg"
-                }
-                onClick={handleLockClick}
-              />
-            </div> */}
             <img
               src="/public/edit_square.svg"
               className="hover:cursor-pointer hover:scale-105 transition"

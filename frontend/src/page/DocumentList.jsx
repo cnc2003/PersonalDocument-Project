@@ -71,7 +71,7 @@ const DocumentList = () => {
                     {document.emoji ? document.emoji : "📄"}
                   </span>
                   <div className="mx-8 ">
-                    <h2 className=" group-hover:text-orange-500 font-bold text-gray-800 break-words transition">
+                    <h2 className="text-sm group-hover:text-orange-500 font-bold text-gray-800 break-words transition">
                       {document.title}
                     </h2>
                     <span className="text-neutral-500">
