@@ -77,7 +77,7 @@ const DocumentDetail = () => {
           <NavBar />
         </aside>
         <section className="h-screen w-full overflow-y-auto flex flex-col">
-          <nav className="min-h-11 sticky bg-white top-0 flex gap-2 justify-end items-center w-full px-2 z-10 ">
+          <nav className="min-h-11 sticky bg-white top-0 flex gap-2 justify-end items-center w-full px-2 z-10">
             <button
               onClick={() => setIsDeleteMenuOpen(!isDeleteMenuOpen)}
               className="btn px-[4px] bg-neutral-200 hover:bg-neutral-300"
@@ -122,12 +122,12 @@ const DocumentDetail = () => {
         </section>
         {isDeleteMenuOpen && (
           <section>
-            <div className="fixed inset-0 grid place-content-center z-30">
+            <div className="fixed inset-0 grid place-content-center ">
               <span
-                className="w-screen h-screen bg-neutral-400 bg-opacity-40 backdrop-blur-sm fixed z-20"
+                className="w-screen h-screen bg-neutral-400 bg-opacity-40 backdrop-blur-sm fixed z-10"
                 onClick={() => handleDeleteMenu()}
               />
-              <div className="z-30">
+              <div className="z-20">
                 <DeleteDoc document={document} />
               </div>
             </div>
