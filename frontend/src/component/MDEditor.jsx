@@ -20,7 +20,10 @@ const MDEditor = () => {
 
   const editor = useEditor({
     autofocus: false,
-    extensions: [StarterKit, Placeholder.configure({ placeholder: "Write something..." })],
+    extensions: [
+      StarterKit,
+      Placeholder.configure({ placeholder: "Write something..." }),
+    ],
     content: md.render(content),
     onUpdate: ({ editor }) => {
       setEditorState(editor.getHTML());
@@ -55,15 +58,17 @@ const MDEditor = () => {
       const renderedContent = md.render(content);
       setEditorState(renderedContent);
       editor.commands.setContent(renderedContent);
-      // console.log(md.render(content));
+      console.log(md.render(content));
     }
   }, [content, documentId, editor]);
 
   return (
     <div className="flex flex-col gap-2 pb-10">
-      <div className="sticky top-4 z-10">{editor && <MDmenubar editor={editor} />}</div>
-      <div className="editor-container">
-        {editor && <EditorContent editor={editor}/>}
+      <div className="sticky top-12 z-20">
+        {editor && <MDmenubar editor={editor} />}
+      </div>
+      <div className="editor-container z-0">
+        {editor && <EditorContent editor={editor} />}
       </div>
     </div>
   );

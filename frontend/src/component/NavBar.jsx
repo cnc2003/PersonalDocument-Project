@@ -77,12 +77,12 @@ const NavBar = () => {
               <p className="mb-0 text-xs">{email}</p>
             </div>
           </div>
-          <div className={`ml-auto pr-2 flex gap-2 ${isExpanded ? "" : "hidden"}`}  >
+          {/* <div className={`ml-auto pr-2 flex gap-2 ${isExpanded ? "" : "hidden"}`}  >
             <img
               src="/public/edit_square.svg"
               className="hover:cursor-pointer hover:scale-105 transition"
             ></img>
-          </div>
+          </div> */}
         </div>
         <hr className="w-auto h-1 mx-[10px] my-[4px] bg-gray-100 border-0 rounded " />
         <div className="mx-[8px] flex gap-2">

@@ -4,6 +4,8 @@ import axios from "axios";
 import NavBar from "../component/NavBar";
 import MDEditor from "../component/MDEditor";
 import debounce from "lodash.debounce";
+import DeleteDoc from "../component/DeleteDoc";
+import { TrashIcon } from "lucide-react";
 
 export const DocumentContent = createContext(null);
 
@@ -13,7 +15,16 @@ const DocumentDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [title, setTitle] = useState("");
   const navigate = useNavigate();
+  const [isDeleteMenuOpen, setIsDeleteMenuOpen] = useState(false);
 
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+    debouncedUpdateTitle(e.target.value);
+  };
+
+  const handleDeleteMenu = () => {
+    setIsDeleteMenuOpen(!isDeleteMenuOpen);
+  }
   const fetchDocument = async () => {
     try {
       const response = await axios.get(
@@ -36,11 +47,6 @@ const DocumentDetail = () => {
     }
   };
 
-  const handleTitleChange = (e) => {
-    setTitle(e.target.value);
-    debouncedUpdateTitle(e.target.value);
-  };
-
   const updateTitle = async (newTitle) => {
     try {
       await axios.patch(
@@ -60,7 +66,7 @@ const DocumentDetail = () => {
   };
 
   const debouncedUpdateTitle = useCallback(debounce(updateTitle, 1000), []);
-
+  
   useEffect(() => {
     fetchDocument();
     window.scrollTo(0, 0); // Scroll to the top when the component mounts or documentId changes
@@ -73,40 +79,63 @@ const DocumentDetail = () => {
         <aside className="">
           <NavBar />
         </aside>
-        <section className="h-screen w-full overflow-y-auto">
-          {document.imageUrl && (
-            <div className="w-full h-64 overflow-hidden">
-              <img src={document.imageUrl} className="w-full object-cover" />
-            </div>
-          )}
-          <div
-            className={`md:mx-[8rem] mx-[3rem] ${
-              document.imageUrl ? "" : "pt-[10rem]"
-            }`}
-          >
-            <div className="text-6xl -mt-9">
-              {document.emoji ? document.emoji : "📄"}
-            </div>
-          </div>
-          <div className="flex flex-col md:mx-[8rem] mx-[3rem] gap-4">
-            <div className="">
-              <textarea
-                value={title}
-                onChange={handleTitleChange}
-                className="w-full text-4xl font-bold pt-[2rem] bg-transparent border-none focus:outline-none resize-none overflow-hidden"
-                rows="1"
-                style={{ whiteSpace: "pre-wrap" }}
-              />
-            </div>
-            {!isLoading && (
-              <div className="">
-                <DocumentContent.Provider value={document}>
-                  <MDEditor />
-                </DocumentContent.Provider>
+        <section className="h-screen w-full overflow-y-auto flex flex-col">
+          <nav className="min-h-11 sticky bg-white top-0 flex gap-2 justify-end items-center w-full px-2 z-10">
+            <button
+              onClick={() => setIsDeleteMenuOpen(!isDeleteMenuOpen)}
+              className="btn px-[4px] bg-neutral-200 hover:bg-neutral-300"
+            >
+              <TrashIcon className="w-6 h-6" />
+            </button>
+          </nav>
+          <div className="z-0">
+            {document.imageUrl && (
+              <div className="w-full h-64 overflow-hidden ">
+                <img src={document.imageUrl} className="w-full object-cover" />
               </div>
             )}
+            <div
+              className={`md:mx-[8rem] mx-[3rem] ${
+                document.imageUrl ? "" : "pt-[10rem]"
+              }`}
+            >
+              <div className="text-6xl -mt-9">
+                {document.emoji ? document.emoji : "📄"}
+              </div>
+            </div>
+            <div className="flex flex-col md:mx-[8rem] mx-[3rem] gap-4">
+              <div className="">
+                <textarea
+                  value={title}
+                  onChange={handleTitleChange}
+                  className="w-full text-4xl font-bold pt-[2rem] bg-transparent border-none focus:outline-none resize-none overflow-hidden"
+                  rows="1"
+                  style={{ whiteSpace: "pre-wrap" }}
+                />
+              </div>
+              {!isLoading && (
+                <div className="">
+                  <DocumentContent.Provider value={document}>
+                    <MDEditor />
+                  </DocumentContent.Provider>
+                </div>
+              )}
+            </div>
           </div>
         </section>
+        {isDeleteMenuOpen && (
+          <section>
+            <div className="fixed inset-0 grid place-content-center ">
+              <span
+                className="w-screen h-screen bg-neutral-400 bg-opacity-40 backdrop-blur-sm fixed z-10"
+                onClick={() => handleDeleteMenu()}
+              />
+              <div className="z-20">
+                <DeleteDoc document={document} />
+              </div>
+            </div>
+          </section>
+        )}
       </div>
     </div>
   );
