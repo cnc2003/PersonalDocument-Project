@@ -1,17 +1,14 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App.jsx";
+import "./index.css";
 
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import SignIn from './page/SignIn.jsx';
-import SignUp from './page/SignUp.jsx';
-import DocumentList from './page/DocumentList.jsx';
-import Playground from './page/Playground.jsx';
-import DocumentDetail from './page/DocumentDetail.jsx';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import SignIn from "./page/SignIn.jsx";
+import SignUp from "./page/SignUp.jsx";
+import DocumentList from "./page/DocumentList.jsx";
+import Playground from "./page/Playground.jsx";
+import DocumentDetail from "./page/DocumentDetail.jsx";
 
 const router = createBrowserRouter([
   {
@@ -20,11 +17,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/signin",
-    element: <SignIn />
+    element: <SignIn />,
   },
   {
     path: "/signup",
-    element: <SignUp />
+    element: <SignUp />,
   },
   {
     path: "/:username/document",
@@ -33,15 +30,15 @@ const router = createBrowserRouter([
   {
     path: "/:username/document/:documentId",
     element: <DocumentDetail />,
-  }
-  ,{
+  },
+  {
     path: "/playground",
-    element: <Playground />
-  }
+    element: <Playground />,
+  },
 ]);
 
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById("root")).render(
   // <StrictMode>
-        <RouterProvider router={router} />
+  <RouterProvider router={router} />
   // </StrictMode>,
-)
+);

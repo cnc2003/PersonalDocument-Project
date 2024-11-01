@@ -9,6 +9,7 @@ import StarterKit from "@tiptap/starter-kit";
 import { DocumentContent } from "../page/DocumentDetail";
 import "./MDEditor.css";
 import MDmenubar from "./MDmenubar";
+import Placeholder from "@tiptap/extension-placeholder";
 
 const MDEditor = () => {
   const { content } = useContext(DocumentContent);
@@ -19,7 +20,7 @@ const MDEditor = () => {
 
   const editor = useEditor({
     autofocus: false,
-    extensions: [StarterKit],
+    extensions: [StarterKit, Placeholder.configure({ placeholder: "Write something..." })],
     content: md.render(content),
     onUpdate: ({ editor }) => {
       setEditorState(editor.getHTML());
@@ -54,7 +55,7 @@ const MDEditor = () => {
       const renderedContent = md.render(content);
       setEditorState(renderedContent);
       editor.commands.setContent(renderedContent);
-      console.log(md.render(content));
+      // console.log(md.render(content));
     }
   }, [content, documentId, editor]);
 
@@ -62,7 +63,7 @@ const MDEditor = () => {
     <div className="flex flex-col gap-2 pb-10">
       <div className="sticky top-4 z-10">{editor && <MDmenubar editor={editor} />}</div>
       <div className="editor-container">
-        {editor && <EditorContent editor={editor} />}
+        {editor && <EditorContent editor={editor}/>}
       </div>
     </div>
   );
