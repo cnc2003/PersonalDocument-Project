@@ -3,7 +3,6 @@ import { useState, useEffect, createContext, useCallback } from "react";
 import axios from "axios";
 import NavBar from "../component/NavBar";
 import MDEditor from "../component/MDEditor";
-import debounce from "lodash.debounce";
 import DeleteDoc from "../component/DeleteDoc";
 import { TrashIcon } from "lucide-react";
 
@@ -19,7 +18,6 @@ const DocumentDetail = () => {
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
-    debouncedUpdateTitle(e.target.value);
   };
 
   const handleDeleteMenu = () => {
@@ -65,7 +63,6 @@ const DocumentDetail = () => {
     }
   };
 
-  const debouncedUpdateTitle = useCallback(debounce(updateTitle, 1000), []);
   
   useEffect(() => {
     fetchDocument();
