@@ -18,7 +18,6 @@ const DocumentDetail = () => {
   const navigate = useNavigate();
   const [isDeleteMenuOpen, setIsDeleteMenuOpen] = useState(false);
   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
-
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
   };
@@ -59,17 +58,13 @@ const DocumentDetail = () => {
 
   const updateDocument = async (obj) => {
     try {
-      await axios.patch(
-        `http://localhost:8080/documents/${documentId}`,
-        obj,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          withCredentials: true,
-        }
-      );
+      await axios.patch(`http://localhost:8080/documents/${documentId}`, obj, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        withCredentials: true,
+      });
     } catch (error) {
       console.error(error);
     }
@@ -77,6 +72,7 @@ const DocumentDetail = () => {
 
   useEffect(() => {
     fetchDocument();
+    setIsEmojiPickerOpen(false);
     window.scrollTo(0, 0); // Scroll to the top when the component mounts or documentId changes
   }, [documentId]);
 
@@ -108,14 +104,20 @@ const DocumentDetail = () => {
               }`}
             >
               <div
-                className="text-6xl -mt-9 cursor-pointer"
+                className="text-6xl -mt-10 cursor-pointer"
                 onClick={() => setIsEmojiPickerOpen(!isEmojiPickerOpen)}
               >
-                {emoji}
+                <span className="hover:bg-neutral-600 hover:bg-opacity-50 rounded-xl transition duration-200">
+                  {emoji}
+                </span>
               </div>
               {isEmojiPickerOpen && (
                 <div className="absolute z-30">
-                  <EmojiPicker onEmojiClick={handleEmojiChange} />
+                  <EmojiPicker
+                    onEmojiClick={handleEmojiChange}
+                    lazyLoadEmojis="false"
+                    emojiStyle="native"
+                  />
                 </div>
               )}
             </div>
