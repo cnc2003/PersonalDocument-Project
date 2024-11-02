@@ -5,6 +5,7 @@ import NavBar from "../component/NavBar";
 import MDEditor from "../component/MDEditor";
 import DeleteDoc from "../component/DeleteDoc";
 import { TrashIcon } from "lucide-react";
+import EmojiPicker from "emoji-picker-react";
 
 export const DocumentContent = createContext(null);
 
@@ -13,8 +14,10 @@ const DocumentDetail = () => {
   const [document, setDocument] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [title, setTitle] = useState("");
+  const [emoji, setEmoji] = useState("📄");
   const navigate = useNavigate();
   const [isDeleteMenuOpen, setIsDeleteMenuOpen] = useState(false);
+  const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -22,7 +25,15 @@ const DocumentDetail = () => {
 
   const handleDeleteMenu = () => {
     setIsDeleteMenuOpen(!isDeleteMenuOpen);
-  }
+  };
+
+  const handleEmojiChange = async (event) => {
+    const newEmoji = event.emoji;
+    await updateDocument({ emoji: newEmoji });
+    setEmoji(newEmoji);
+    setIsEmojiPickerOpen(false);
+  };
+
   const fetchDocument = async () => {
     try {
       const response = await axios.get(
@@ -37,6 +48,7 @@ const DocumentDetail = () => {
       );
       setDocument(response.data);
       setTitle(response.data.title);
+      setEmoji(response.data.emoji || "📄");
       setIsLoading(false);
     } catch (error) {
       if (error.response.status === 404) {
@@ -45,11 +57,11 @@ const DocumentDetail = () => {
     }
   };
 
-  const updateTitle = async (newTitle) => {
+  const updateDocument = async (obj) => {
     try {
       await axios.patch(
         `http://localhost:8080/documents/${documentId}`,
-        { title: newTitle },
+        obj,
         {
           headers: {
             "Content-Type": "application/json",
@@ -63,7 +75,6 @@ const DocumentDetail = () => {
     }
   };
 
-  
   useEffect(() => {
     fetchDocument();
     window.scrollTo(0, 0); // Scroll to the top when the component mounts or documentId changes
@@ -92,15 +103,23 @@ const DocumentDetail = () => {
               </div>
             )}
             <div
-              className={`md:mx-[8rem] mx-[3rem] ${
+              className={`md:mx-[14rem] mx-[3rem] ${
                 document.imageUrl ? "" : "pt-[10rem]"
               }`}
             >
-              <div className="text-6xl -mt-9">
-                {document.emoji ? document.emoji : "📄"}
+              <div
+                className="text-6xl -mt-9 cursor-pointer"
+                onClick={() => setIsEmojiPickerOpen(!isEmojiPickerOpen)}
+              >
+                {emoji}
               </div>
+              {isEmojiPickerOpen && (
+                <div className="absolute z-30">
+                  <EmojiPicker onEmojiClick={handleEmojiChange} />
+                </div>
+              )}
             </div>
-            <div className="flex flex-col md:mx-[8rem] mx-[3rem] gap-4">
+            <div className="flex flex-col md:mx-[14rem] mx-[3rem] gap-4">
               <div className="">
                 <textarea
                   value={title}

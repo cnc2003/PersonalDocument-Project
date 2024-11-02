@@ -114,6 +114,7 @@ func PatchDocumentContent(c *gin.Context) {
     var input struct {
         Title   *string `json:"title"`
         Content *string `json:"content"`
+		Emoji   *string `json:"emoji"`
     }
     if err := c.ShouldBindJSON(&input); err != nil {
         c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -125,6 +126,9 @@ func PatchDocumentContent(c *gin.Context) {
     }
     if input.Content != nil {
         document.Content = *input.Content
+    }
+	if input.Emoji != nil {
+        document.Emoji = *input.Emoji
     }
 
     if err := config.DB.Save(&document).Error; err != nil {

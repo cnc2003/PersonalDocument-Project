@@ -58,7 +58,7 @@ const MDEditor = () => {
       const renderedContent = md.render(content);
       setEditorState(renderedContent);
       editor.commands.setContent(renderedContent);
-      console.log(md.render(content));
+      // console.log(md.render(content));
     }
   }, [content, documentId, editor]);
 
