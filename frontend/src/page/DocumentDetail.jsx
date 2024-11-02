@@ -84,7 +84,26 @@ const DocumentDetail = () => {
           <NavBar />
         </aside>
         <section className="h-screen w-full overflow-y-auto flex flex-col">
-          <nav className="min-h-11 sticky bg-white top-0 flex gap-2 justify-end items-center w-full px-2 z-10">
+          <nav className="min-h-11 sticky bg-white top-0 flex gap-2 justify-between items-center w-full px-2 z-10">
+          <div className="text-gray-800 w-full overflow-x-hidden">
+              <div className="flex gap-2">
+                <span
+                  className="flex-shrink-0"
+                  onClick={() =>
+                    navigate(`/${localStorage.getItem("username")}/document`)
+                  }
+                >
+                  📄
+                  <span className="hover:cursor-pointer hover:underline transition duration-300">
+                    Documents
+                  </span>
+                  <span> / </span>
+                </span>
+                <span className="cursor-default flex-shrink-0">
+                  {document.emoji} {document.title}
+                </span>
+              </div>
+            </div>
             <button
               onClick={() => setIsDeleteMenuOpen(!isDeleteMenuOpen)}
               className="btn px-[4px] bg-neutral-200 hover:bg-neutral-300"
