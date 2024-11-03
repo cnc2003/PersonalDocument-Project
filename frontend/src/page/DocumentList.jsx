@@ -41,7 +41,7 @@ const DocumentList = () => {
         <aside className="sticky">
           <NavBar />
         </aside>
-        <section className="h-screen overflow-y-scroll pb-8 overflow-hidden">
+        <section className="h-screen w-full overflow-y-scroll pb-8 overflow-hidden">
           {isCreateMenuOpen && (
             <div className="fixed inset-0 grid place-content-center ">
               <span className="w-screen h-screen bg-neutral-400 bg-opacity-40 backdrop-blur-sm fixed z-10" onClick={()=> handleCreateMenu()}/>
