@@ -115,7 +115,9 @@ func PatchDocumentContent(c *gin.Context) {
         Title   *string `json:"title"`
         Content *string `json:"content"`
 		Emoji   *string `json:"emoji"`
+		ImageURL *string `json:"imageUrl"`
     }
+	
     if err := c.ShouldBindJSON(&input); err != nil {
         c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
         return
@@ -130,6 +132,9 @@ func PatchDocumentContent(c *gin.Context) {
 	if input.Emoji != nil {
         document.Emoji = *input.Emoji
     }
+	if input.ImageURL != nil {
+		document.ImageUrl = *input.ImageURL
+	}
 
     if err := config.DB.Save(&document).Error; err != nil {
         c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update document"})
