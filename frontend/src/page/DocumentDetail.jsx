@@ -4,8 +4,9 @@ import axios from "axios";
 import NavBar from "../component/NavBar";
 import MDEditor from "../component/MDEditor";
 import DeleteDoc from "../component/DeleteDoc";
-import { TrashIcon } from "lucide-react";
+import { ImageIcon, TrashIcon } from "lucide-react";
 import EmojiPicker from "emoji-picker-react";
+import AddImageDoc from "../component/AddImageDoc";
 
 export const DocumentContent = createContext(null);
 
@@ -18,6 +19,7 @@ const DocumentDetail = () => {
   const navigate = useNavigate();
   const [isDeleteMenuOpen, setIsDeleteMenuOpen] = useState(false);
   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
+  const [isImagePickerOpen, setIsImagePickerOpen] = useState(false);
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
   };
@@ -26,9 +28,14 @@ const DocumentDetail = () => {
     setIsDeleteMenuOpen(!isDeleteMenuOpen);
   };
 
+  const handleImageMenu = () => {
+    setIsImagePickerOpen(!isImagePickerOpen);
+  }
+
   const handleEmojiChange = async (event) => {
     const newEmoji = event.emoji;
     await updateDocument({ emoji: newEmoji });
+    document.emoji = newEmoji
     setEmoji(newEmoji);
     setIsEmojiPickerOpen(false);
   };
@@ -85,7 +92,7 @@ const DocumentDetail = () => {
         </aside>
         <section className="h-screen w-full overflow-y-auto flex flex-col">
           <nav className="min-h-11 sticky bg-white top-0 flex gap-2 justify-between items-center w-full px-2 z-10">
-          <div className="text-gray-800 w-full overflow-x-hidden">
+            <div className="text-gray-800 w-full overflow-x-hidden">
               <div className="flex gap-2">
                 <span
                   className="flex-shrink-0"
@@ -111,6 +118,7 @@ const DocumentDetail = () => {
               <TrashIcon className="w-6 h-6" />
             </button>
           </nav>
+
           <div className="z-0">
             {document.imageUrl && (
               <div className="w-full h-64 overflow-hidden ">
@@ -140,12 +148,18 @@ const DocumentDetail = () => {
                 </div>
               )}
             </div>
+            <div className="h-8 mt-2 md:mx-[14rem] mx-[3rem] opacity-0 hover:opacity-100 transition duration-300">
+              <div className="btn w-fit pl-[4px] pr-[6px] flex justify-center gap-1 font-normal text-gray-800 bg-opacity-0 hover:bg-amber-200 hover:cursor-pointer transition duration-300 "
+              onClick={() => handleImageMenu()}>
+                <ImageIcon /> Change Cover
+              </div>
+            </div>
             <div className="flex flex-col md:mx-[14rem] mx-[3rem] gap-4">
               <div className="">
                 <textarea
                   value={title}
                   onChange={handleTitleChange}
-                  className="w-full text-4xl font-bold pt-[2rem] bg-transparent border-none focus:outline-none resize-none overflow-hidden"
+                  className="w-full text-4xl font-bold mt-4 bg-transparent border-none focus:outline-none resize-none overflow-hidden"
                   rows="1"
                   style={{ whiteSpace: "pre-wrap" }}
                 />
@@ -161,7 +175,7 @@ const DocumentDetail = () => {
           </div>
         </section>
         {isDeleteMenuOpen && (
-          <section>
+          <section className="z-40">
             <div className="fixed inset-0 grid place-content-center ">
               <span
                 className="w-screen h-screen bg-neutral-400 bg-opacity-40 backdrop-blur-sm fixed z-10"
@@ -169,6 +183,19 @@ const DocumentDetail = () => {
               />
               <div className="z-20">
                 <DeleteDoc document={document} />
+              </div>
+            </div>
+          </section>
+        )}
+        {isImagePickerOpen && (
+          <section className="z-40">
+            <div className="fixed inset-0 grid place-content-center ">
+              <span
+                className="w-screen h-screen bg-neutral-400 bg-opacity-40 backdrop-blur-sm fixed z-10"
+                onClick={() => handleImageMenu()}
+              />
+              <div className="z-20">
+                <AddImageDoc document={document} onClose={handleImageMenu} />
               </div>
             </div>
           </section>
