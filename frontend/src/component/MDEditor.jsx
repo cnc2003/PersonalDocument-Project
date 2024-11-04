@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Underline } from "lucide-react";
 import MarkdownIt from "markdown-it";
 import TurndownService from "turndown";
 import { useContext, useEffect, useState } from "react";

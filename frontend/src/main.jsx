@@ -9,6 +9,7 @@ import SignUp from "./page/SignUp.jsx";
 import DocumentList from "./page/DocumentList.jsx";
 import Playground from "./page/Playground.jsx";
 import DocumentDetail from "./page/DocumentDetail.jsx";
+import SettingPage from "./page/SettingPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,9 @@ const router = createBrowserRouter([
   {
     path: "/:username/document",
     element: <DocumentList />,
+  },{
+    path: "/:username/setting",
+    element: <SettingPage />,
   },
   {
     path: "/:username/document/:documentId",

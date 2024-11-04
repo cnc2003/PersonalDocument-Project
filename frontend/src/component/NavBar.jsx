@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 const NavBar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isLockExpanded, setIsLockExpanded] = useState(false);
+  const [isUserEdit, setIsUserEdit] = useState(false);
   const [documents, setDocuments] = useState([]);
   const username = localStorage.getItem("username");
   const email = localStorage.getItem("email");
@@ -48,6 +49,10 @@ const NavBar = () => {
       setIsExpanded(boolean);
     }
   };
+  
+  const handleSettingClick = () => { 
+    navigate(`/${username}/setting`)
+  }
 
   const handleLockClick = () => {
     setIsLockExpanded(!isLockExpanded);
@@ -68,7 +73,7 @@ const NavBar = () => {
     >
       <div name="nav" className="flex flex-col gap-1">
         <div className="user-info mx-[8px] pt-2 flex gap-2 items-center">
-          <div className={`flex px-[6px] py-[4px] justify-center ${isExpanded ? '' : 'px-[4px]'}`}>
+          <div className={`flex pl-[6px] pr-[8px] py-[4px] justify-center ${isExpanded ? '' : 'px-[4px]'} hover:bg-neutral-500 hover:bg-opacity-10 hover:cursor-pointer rounded-lg`} onClick={() => handleSettingClick()}>
             <div className={`bg-neutral-300 rounded-xl size-10 mr-[8px] flex items-center justify-center ${isExpanded ? "" : "mr-0"}`}>
               <img src="/public/userface.svg" className="size-8"/>
             </div>

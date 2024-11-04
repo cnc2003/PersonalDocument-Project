@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../App.css";
@@ -25,6 +25,8 @@ export default function SignUp() {
   });
 
   function checkInputCriteria() {
+    console.log(credential)
+    
     setInputCriteria({
       user: credential.user.length > 0,
       email: credential.email.length > 0,
@@ -87,12 +89,14 @@ export default function SignUp() {
     }));
     if (name === "user" || name === "email") {
       checkInputCriteria(value);
+      console.log(inputCriteria);
     }
     if (name === "password") {
       checkPasswordCriteria(value);
     }
   }
-
+  // useEffect(() => {console.log(inputCriteria, passwordCriteria);
+  // }, [inputCriteria, passwordCriteria]);
   return (
     <>
     <FloatingEmojis />
