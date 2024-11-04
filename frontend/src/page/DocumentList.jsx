@@ -72,7 +72,7 @@ const DocumentList = () => {
               {documents.map((document) => (
                 <div
                   key={document.id}
-                  className="bg-white group shadow-md rounded-3xl box-border h-52 w-64 overflow-hidden flex flex-col hover:shadow-lg hover:scale-105 hover:rotate-2 hover:border-amber-400 hover:border-4 hover:bg-amber-100 transition ease-in-out duration-300 hover:cursor-[url(/public/mouse_click.svg),_pointer]"
+                  className="bg-white group shadow-md rounded-3xl box-border h-52 w-64 overflow-hidden flex flex-col hover:shadow-lg hover:scale-105 hover:rotate-2 hover:border-amber-400 hover:border-4 hover:bg-amber-100 transition ease-in-out duration-300 hover:cursor-pointer"
                   onClick={() =>
                     navigate(`/${username}/document/${document.id}`)
                   }
