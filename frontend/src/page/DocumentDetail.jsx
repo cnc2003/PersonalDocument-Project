@@ -139,10 +139,10 @@ const DocumentDetail = () => {
               }`}
             >
               <div
-                className="text-6xl -mt-10 cursor-pointer"
+                className="text-6xl -mt-10 cursor-pointer w-fit"
                 onClick={() => setIsEmojiPickerOpen(!isEmojiPickerOpen)}
               >
-                <span className="hover:bg-neutral-600 hover:bg-opacity-50 rounded-xl transition duration-200">
+                <span className=" hover:bg-neutral-600 hover:bg-opacity-50 rounded-xl transition duration-200">
                   {emoji}
                 </span>
               </div>
