@@ -121,7 +121,15 @@ const DocumentDetail = () => {
 
           <div className="z-0">
             {document.imageUrl && (
-              <div className="w-full h-64 overflow-hidden ">
+              <div className="w-full h-64 overflow-hidden group">
+                {document.imageUrl && (
+                <div
+                  className="absolute group-hover:opacity-100 scale-90 opacity-0 right-3 m-2 btn w-fit pl-[4px] pr-[6px] flex justify-center gap-1 font-normal text-gray-600 bg-opacity-0 hover:bg-neutral-900 hover:bg-opacity-20 hover:cursor-pointer transition duration-300 "
+                  onClick={() => handleImageMenu()}
+                >
+                  <ImageIcon /> Change Cover
+                </div>
+              )}
                 <img src={document.imageUrl} className="w-full object-cover" />
               </div>
             )}
@@ -149,10 +157,14 @@ const DocumentDetail = () => {
               )}
             </div>
             <div className="h-8 mt-2 md:mx-[14rem] mx-[3rem] opacity-0 hover:opacity-100 transition duration-300">
-              <div className="btn w-fit pl-[4px] pr-[6px] flex justify-center gap-1 font-normal text-gray-800 bg-opacity-0 hover:bg-amber-200 hover:cursor-pointer transition duration-300 "
-              onClick={() => handleImageMenu()}>
-                <ImageIcon /> Change Cover
-              </div>
+              {!document.imageUrl && (
+                <div
+                  className="btn w-fit pl-[4px] pr-[6px] flex justify-center gap-1 font-normal text-gray-800 bg-opacity-0 hover:bg-amber-200 hover:cursor-pointer transition duration-300 "
+                  onClick={() => handleImageMenu()}
+                >
+                  <ImageIcon /> Add Cover
+                </div>
+              )}
             </div>
             <div className="flex flex-col md:mx-[14rem] mx-[3rem] gap-4">
               <div className="">
