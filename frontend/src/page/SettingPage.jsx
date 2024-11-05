@@ -11,8 +11,13 @@ const SettingPage = () => {
   const [email, setEmail] = useState(localStorage.getItem("email") || "");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [profileImageUrl, setProfileImage] = useState("");
+  const [profileImage, setProfileImage] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [passwordCriteria, setPasswordCriteria] = useState({
+    length: false,
+    uppercase: false,
+    number: false,
+  });
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -27,6 +32,11 @@ const SettingPage = () => {
   const validatePassword = (password) => {
     const passwordPolicy =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    setPasswordCriteria({
+      length: password.length >= 8,
+      uppercase: /[A-Z]/.test(password),
+      number: /\d/.test(password),
+    });
     if (!passwordPolicy.test(password)) {
       setPasswordError(
         "Password must be at least 8 characters long, include an uppercase letter, a lowercase letter, a number, and a special character."
@@ -48,7 +58,7 @@ const SettingPage = () => {
           username,
           email,
           password: password ? password : undefined,
-          profileImageUrl,
+          profileImage,
         },
         {
           headers: {
@@ -102,7 +112,6 @@ const SettingPage = () => {
                   Account
                 </button>
               </div>
-
               {activeTab === "general" && (
                 <div className="flex flex-col gap-4 mt-4">
                   <div className="flex flex-col gap-2">
@@ -111,14 +120,14 @@ const SettingPage = () => {
                     </label>
                     <input
                       type="text"
-                      value={profileImageUrl}
+                      value={profileImage}
                       onChange={handleProfileImageChange}
                       className="bg-neutral-300 px-4 py-2 rounded-md text-neutral-600 font-semibold"
                     />
                   </div>
                   <div className="flex flex-col gap-2">
                     <label className="text-neutral-600 font-semibold">
-                      Prefferred name
+                      Preferred Name
                     </label>
                     <input
                       type="text"
@@ -152,9 +161,6 @@ const SettingPage = () => {
                       onChange={handlePasswordChange}
                       className="bg-neutral-300 px-4 py-2 rounded-md text-neutral-600 font-semibold"
                     />
-                    {passwordError && (
-                      <span className="text-red-500">{passwordError}</span>
-                    )}
                   </div>
                   <div className="flex flex-col gap-2">
                     <label className="text-neutral-600 font-semibold">
@@ -166,18 +172,60 @@ const SettingPage = () => {
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       className="bg-neutral-300 px-4 py-2 rounded-md text-neutral-600 font-semibold"
                     />
-                    {password !== confirmPassword && (
-                      <span className="text-red-500">
-                        Passwords do not match
-                      </span>
-                    )}
+                  </div>
+                  <div className="password-checklist text-left bg-gray-100 p-4 rounded-lg mb-4">
+                    <p className="font-semibold mb-2">Password must contain:</p>
+                    <ul className="list-disc list-inside">
+                      <li
+                        className={
+                          passwordCriteria.length
+                            ? "text-green-500"
+                            : "text-red-500"
+                        }
+                      >
+                        At least 8 characters
+                      </li>
+                      <li
+                        className={
+                          passwordCriteria.uppercase
+                            ? "text-green-500"
+                            : "text-red-500"
+                        }
+                      >
+                        At least one uppercase letter
+                      </li>
+                      <li
+                        className={
+                          passwordCriteria.number
+                            ? "text-green-500"
+                            : "text-red-500"
+                        }
+                      >
+                        At least one number
+                      </li>
+                      <li
+                        className={
+                          password === confirmPassword
+                            ? "text-green-500"
+                            : "text-red-500"
+                        }
+                      >
+                        Password must match
+                      </li>
+                    </ul>
                   </div>
                 </div>
               )}
               <button
                 className="mt-4 px-4 py-2 bg-blue-300 hover:bg-blue-400 rounded-md"
                 onClick={handleSave}
-                disabled={password && password !== confirmPassword}
+                disabled={
+                  password &&
+                  (password !== confirmPassword ||
+                    !passwordCriteria.length ||
+                    !passwordCriteria.uppercase ||
+                    !passwordCriteria.number)
+                }
               >
                 Save
               </button>
