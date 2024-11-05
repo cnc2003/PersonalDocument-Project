@@ -70,7 +70,7 @@ func Login(c *gin.Context) {
 	}
 
 	// Generate JWT token
-	token, err := utils.GenerateToken(user.ID, user.Name , user.Username, user.Email)
+	token, err := utils.GenerateToken(user.ID, user.Name, user.Username, user.Email)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err})
 		return
@@ -80,41 +80,53 @@ func Login(c *gin.Context) {
 }
 
 func UpdateUser(c *gin.Context) {
-    var user models.User
-    var newUser models.User
+	var user models.User
 
-    // Bind JSON body to newUser struct
-    if err := c.ShouldBindJSON(&newUser); err != nil {
-        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-        return
-    }
+	// Get user from token
+	userID, _ := c.Get("user_id")
+	if err := config.DB.Where("id = ?", userID).First(&user).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
+		return
+	}
 
-    // Get user from token
-    userID, _ := c.Get("user_id")
-    if err := config.DB.Where("id = ?", userID).First(&user).Error; err != nil {
-        c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
-        return
-    }
+	var newUser struct {
+		Username *string `json:"username"`
+		Email    *string `json:"email"`
+		Password *string `json:"password"`
+		// ImageURL *string `json:"imageUrl"`
+	}
+	// Bind JSON body to newUser struct
+	if err := c.ShouldBindJSON(&newUser); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
-    // Update user fields
-    user.Name = newUser.Name
-    user.Username = newUser.Username
-    user.Email = newUser.Email
-    if newUser.Password != "" {
-        hashedPassword, err := bcrypt.GenerateFromPassword([]byte(newUser.Password), bcrypt.DefaultCost)
-        if err != nil {
-            c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to hash password"})
-            return
-        }
-        user.Password = string(hashedPassword)
-    }
+	// Update user fields
+	if newUser.Username != nil {
+		user.Username = *newUser.Username
+	}
+	if newUser.Email != nil {
+		user.Email = *newUser.Email
+	}
+	// if newUser.ImageURL != nil {
+	// 	user.ImageURL = *newUser.ImageURL
+	// }
 
-    // Save the updated user back to the database
-    if err := config.DB.Save(&user).Error; err != nil {
-        c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update user"})
-        return
-    }
+	if newUser.Password != nil {
+		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(*newUser.Password), bcrypt.DefaultCost)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to hash password"})
+			return
+		}
+		user.Password = string(hashedPassword)
+	}
 
-    // Return the updated user
-    c.JSON(http.StatusOK, gin.H{"user": user})
+	// Save the updated user back to the database
+	if err := config.DB.Save(&user).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update user"})
+		return
+	}
+
+	// Return the updated user
+	c.JSON(http.StatusOK, gin.H{"user": user})
 }
