@@ -101,6 +101,7 @@ func UpdateUser(c *gin.Context) {
 		return
 	}
 
+	// prepare data for update
 	// Update user fields
 	if newUser.Username != nil {
 		user.Username = *newUser.Username
@@ -111,7 +112,7 @@ func UpdateUser(c *gin.Context) {
 	// if newUser.ImageURL != nil {
 	// 	user.ImageURL = *newUser.ImageURL
 	// }
-
+	// Hash password before update to db
 	if newUser.Password != nil {
 		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(*newUser.Password), bcrypt.DefaultCost)
 		if err != nil {
