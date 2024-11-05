@@ -11,7 +11,7 @@ const SettingPage = () => {
   const [email, setEmail] = useState(localStorage.getItem("email") || "");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [profileImage, setProfileImage] = useState("");
+  const [profileImageUrl, setProfileImage] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
   const handleTabChange = (tab) => {
@@ -48,7 +48,7 @@ const SettingPage = () => {
           username,
           email,
           password: password ? password : undefined,
-          profileImage,
+          profileImageUrl,
         },
         {
           headers: {
@@ -111,14 +111,14 @@ const SettingPage = () => {
                     </label>
                     <input
                       type="text"
-                      value={profileImage}
+                      value={profileImageUrl}
                       onChange={handleProfileImageChange}
                       className="bg-neutral-300 px-4 py-2 rounded-md text-neutral-600 font-semibold"
                     />
                   </div>
                   <div className="flex flex-col gap-2">
                     <label className="text-neutral-600 font-semibold">
-                      Username
+                      Prefferred name
                     </label>
                     <input
                       type="text"
