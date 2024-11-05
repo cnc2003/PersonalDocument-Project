@@ -11,7 +11,8 @@ const SettingPage = () => {
   const [email, setEmail] = useState(localStorage.getItem("email") || "");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [profileImage, setProfileImage] = useState("");
+  const [profileImageUrl, setProfileImage] = useState("");
+  const [isValidUrl, setIsValidUrl] = useState(true);
   const [passwordError, setPasswordError] = useState("");
   const [passwordCriteria, setPasswordCriteria] = useState({
     length: false,
@@ -47,18 +48,33 @@ const SettingPage = () => {
   };
 
   const handleProfileImageChange = (e) => {
-    setProfileImage(e.target.value);
+    const url = e.target.value;
+    setProfileImage(url);
+    validateImageUrl(url);
+  };
+
+  const validateImageUrl = (url) => {
+    const imageUrlPattern = /\.(jpeg|jpg|gif|png)(\?.*)?$/i;
+    if (!imageUrlPattern.test(url)) {
+      setIsValidUrl(false);
+      return;
+    }
+
+    const img = new Image();
+    img.onload = () => setIsValidUrl(true);
+    img.onerror = () => setIsValidUrl(false);
+    img.src = url;
   };
 
   const handleSave = async () => {
     try {
       await axios.patch(
-        `http://localhost:8080/users/${localStorage.getItem("userId")}`,
+        `http://localhost:8080/users`,
         {
           username,
           email,
           password: password ? password : undefined,
-          profileImage,
+          profileImageUrl,
         },
         {
           headers: {
@@ -120,10 +136,15 @@ const SettingPage = () => {
                     </label>
                     <input
                       type="text"
-                      value={profileImage}
+                      value={profileImageUrl}
                       onChange={handleProfileImageChange}
-                      className="bg-neutral-300 px-4 py-2 rounded-md text-neutral-600 font-semibold"
+                      className={`bg-neutral-300 px-4 py-2 rounded-md text-neutral-600 font-semibold ${
+                        isValidUrl ? "" : "border-red-500"
+                      }`}
                     />
+                    {!isValidUrl && (
+                      <span className="text-red-500">Invalid image URL</span>
+                    )}
                   </div>
                   <div className="flex flex-col gap-2">
                     <label className="text-neutral-600 font-semibold">
@@ -205,7 +226,7 @@ const SettingPage = () => {
                       </li>
                       <li
                         className={
-                          password === confirmPassword
+                          password === confirmPassword && ( password || confirmPassword ) && passwordCriteria.length && passwordCriteria.uppercase && passwordCriteria.number 
                             ? "text-green-500"
                             : "text-red-500"
                         }
@@ -220,11 +241,12 @@ const SettingPage = () => {
                 className="mt-4 px-4 py-2 bg-blue-300 hover:bg-blue-400 rounded-md"
                 onClick={handleSave}
                 disabled={
-                  password &&
+                  (activeTab === "account" &&
                   (password !== confirmPassword ||
                     !passwordCriteria.length ||
                     !passwordCriteria.uppercase ||
-                    !passwordCriteria.number)
+                    !passwordCriteria.number)) ||
+                  (activeTab === "general" && !isValidUrl)
                 }
               >
                 Save
