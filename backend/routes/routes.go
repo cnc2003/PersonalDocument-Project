@@ -23,7 +23,6 @@ func SetupRouter() *gin.Engine {
 
 	router.POST("/register", controllers.Register)
 	router.POST("/login", controllers.Login)
-
 	// Protected routes (only accessible with valid JWT)
 	documentRoutes := router.Group("/documents")
 	documentRoutes.Use(middleware.AuthMiddleware())
@@ -36,5 +35,11 @@ func SetupRouter() *gin.Engine {
 		documentRoutes.DELETE("/:id", controllers.DeleteDocument)
 	}
 
+	userRoutes := router.Group("/users")
+	userRoutes.Use(middleware.AuthMiddleware())
+	{
+		userRoutes.PATCH("", controllers.UpdateUser)
+	}
+	
 	return router
 }

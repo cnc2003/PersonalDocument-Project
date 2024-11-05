@@ -78,3 +78,43 @@ func Login(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"type": "LOGIN", "token": token})
 }
+
+func UpdateUser(c *gin.Context) {
+    var user models.User
+    var newUser models.User
+
+    // Bind JSON body to newUser struct
+    if err := c.ShouldBindJSON(&newUser); err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
+
+    // Get user from token
+    userID, _ := c.Get("user_id")
+    if err := config.DB.Where("id = ?", userID).First(&user).Error; err != nil {
+        c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
+        return
+    }
+
+    // Update user fields
+    user.Name = newUser.Name
+    user.Username = newUser.Username
+    user.Email = newUser.Email
+    if newUser.Password != "" {
+        hashedPassword, err := bcrypt.GenerateFromPassword([]byte(newUser.Password), bcrypt.DefaultCost)
+        if err != nil {
+            c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to hash password"})
+            return
+        }
+        user.Password = string(hashedPassword)
+    }
+
+    // Save the updated user back to the database
+    if err := config.DB.Save(&user).Error; err != nil {
+        c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update user"})
+        return
+    }
+
+    // Return the updated user
+    c.JSON(http.StatusOK, gin.H{"user": user})
+}
