@@ -4,10 +4,9 @@ import (
 	"document-backend/config"
 	"document-backend/models"
 	"document-backend/utils"
-	"net/http"
-
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
+	"net/http"
 )
 
 func Register(c *gin.Context) {
@@ -82,11 +81,10 @@ func Login(c *gin.Context) {
 func UpdateUser(c *gin.Context) {
 	var user models.User
 	var newUser struct {
-		Username    *string `json:"username"`
-		Email       *string `json:"email"`
-		Password    *string `json:"password"`
-		NewPassword *string `json:"newpassword"`
-		// ImageURL    *string `json:"imageUrl"`
+		Username        *string `json:"username"`
+		Email           *string `json:"new_email"`
+		ConfirmPassword string  `json:"password"`
+		NewPassword     *string `json:"newpassword"`
 	}
 
 	// Get user from token
@@ -101,11 +99,14 @@ func UpdateUser(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
 	// Compare the provided password with the stored hash
-	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(*newUser.Password)); err != nil {
+	var passA = []byte(user.Password)
+	var passB = []byte(newUser.ConfirmPassword)
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(newUser.ConfirmPassword)); err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{
-			"error": "Incorrect password",
+			"error":        "Incorrect password",
+			"old_password": string(passA),
+			"new_password": string(passB),
 		})
 		return
 	}
@@ -125,15 +126,19 @@ func UpdateUser(c *gin.Context) {
 		}
 		user.Password = string(hashedPassword)
 	}
-	// if newUser.ImageURL != nil {
-	// 	user.ImageURL = *newUser.ImageURL
-	// }
 
 	// Save the updated user to the database
 	if err := config.DB.Save(&user).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update user"})
 		return
 	}
-
-	c.JSON(http.StatusOK, user)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "User updated successfully",
+		"user": gin.H{
+			"id":       user.ID,
+			"name":     user.Name,
+			"username": user.Username,
+			"email":    user.Email,
+		},
+	})
 }
