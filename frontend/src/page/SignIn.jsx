@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { JwtDecode } from "../util/util";
+import { checkNotExpire, JwtDecode } from "../util/util";
 import FloatingEmojis from "../component/FloatingEmojis";
 
 export default function SignIn() {
@@ -26,12 +26,12 @@ export default function SignIn() {
           },
         }
       );
-      localStorage.clear();
       localStorage.setItem("token", response.data.token);
       const data = await JwtDecode(response.data.token);
       for (const [key, value] of Object.entries(data)) {
         localStorage.setItem(key, value);
       }
+    
       // Handle successful login
       const username = localStorage.getItem("username");
       return navigate(`/${username}/document`);
@@ -51,7 +51,23 @@ export default function SignIn() {
     }));
   }
 
-  useEffect(() => {localStorage.clear()}, []);
+  function checkCredential() {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const isNotExpire = checkNotExpire(token)
+      console.log(isNotExpire);
+      if (isNotExpire) {
+        return navigate(`/${localStorage.getItem("username")}/document`);
+      }else{
+        return localStorage.clear()
+      }
+    }
+  }
+
+  useEffect(() => {
+    checkCredential()
+  }, []);
+
   return (
     <>
       <div className="fixed inset-0 grid place-content-center z-10">

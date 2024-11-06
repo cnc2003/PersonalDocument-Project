@@ -34,4 +34,16 @@ function JwtDecode(token) {
     return "Just now";
   }
 
-export { JwtDecode , timeAgo};
+  function checkNotExpire(token) {
+    const decodedToken = JwtDecode(token)
+    const currentTime = Date.now() / 1000
+    console.table(decodedToken.exp, currentTime);
+    
+    if (decodedToken.exp > currentTime) {
+      return true
+    }else{
+      return false
+    }
+  }
+
+export { JwtDecode , timeAgo, checkNotExpire};
