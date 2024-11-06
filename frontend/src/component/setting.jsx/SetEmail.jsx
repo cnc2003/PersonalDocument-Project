@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 
-const SetEmail = (props) => {
-  const { email } = props;
-  const [ alertMessage, setAlertMessage ] = useState("");
+const SetEmail = ({ email, onClose }) => {
+  const [alertMessage, setAlertMessage] = useState("");
   const [newEmail, setNewEmail] = useState({
     new_email: "",
     password: "",
@@ -14,7 +13,7 @@ const SetEmail = (props) => {
     setNewEmail({ ...newEmail, new_email: email });
   };
 
-  const handlePassword = async (e) => {
+  const handlePassword = (e) => {
     const password = e.target.value;
     setNewEmail({ ...newEmail, password: password });
   };
@@ -24,7 +23,11 @@ const SetEmail = (props) => {
     password: false,
   });
 
-  const loadNewData = () => {};
+  const loadNewData = (data) => {
+    for (const key in data) {
+      localStorage.setItem(`${key}`, data[key]);
+    }
+  };
 
   const saveEmail = async () => {
     if (newEmail.new_email === "") {
@@ -43,11 +46,20 @@ const SetEmail = (props) => {
               "Content-Type": "application/json",
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
+            withCredentials: true,
           }
         );
-        console.log(response.data);
+        if (response && response.data) {
+          loadNewData(response.data);
+        }
+        onClose();
       } catch (error) {
-        setAlertMessage(error.response.data.error);
+        console.log(error);
+        if (error.response && error.response.data && error.response.data.error) {
+          setAlertMessage(error.response.data.error);
+        } else {
+          setAlertMessage("An unexpected error occurred");
+        }
       }
     }
   };
@@ -59,7 +71,8 @@ const SetEmail = (props) => {
       </div>
       {alertMessage && (
         <div className="bg-red-100 text-red-800 text-sm font-medium px-2.5 py-0.5 mt-2 rounded text-center">
-🙅‍♂️ {alertMessage}        </div>
+          🙅‍♂️ {alertMessage}{" "}
+        </div>
       )}
       <div className="my-3">Enter new email</div>
       <input
@@ -88,4 +101,5 @@ const SetEmail = (props) => {
     </div>
   );
 };
+
 export default SetEmail;

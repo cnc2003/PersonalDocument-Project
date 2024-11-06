@@ -1,4 +1,4 @@
-import { act, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import NavBar from "../component/NavBar";
 import "./Setting.css";
 import SetEmail from "../component/setting.jsx/SetEmail";
@@ -19,13 +19,14 @@ const SettingPage = () => {
     }));
   };
 
+  function handleCloseMenu() {
+    setActiveTab("");
+    loadUserInfo()
+  }
+
   useEffect(() => {
     loadUserInfo();
   }, []);
-
-  // useEffect(() => {
-  //   console.log(activeTab);
-  // }, [activeTab]);
 
   return (
     <div className="sticky">
@@ -51,12 +52,13 @@ const SettingPage = () => {
                 <div className="flex flex-col">
                   <span className="font-semibold">Username</span>
                   <span className="text-sm text-gray-500">
-                    {userInfo.username || "No username"}
+                    {/* {userInfo.username || "No username"} */}
+                    Change your preffered username here.
                   </span>
                 </div>
-                <button className="setbtn" onClick={() => setActiveTab("")}>
-                  Change email
-                </button>
+                {/* <button className="setbtn" onClick={() => setActiveTab("")}>
+                  Change name
+                </button> */}
               </div>
               <div className="flex flex-row items-center justify-between mb-4">
                 <div className="flex flex-col">
@@ -98,12 +100,14 @@ const SettingPage = () => {
                 onClick={() => setActiveTab("")}
               />
               <div className="z-10">
-                {activeTab === "email" && <SetEmail email={userInfo.email} />}
+                {activeTab === "email" && (
+                  <SetEmail email={userInfo.email} onClose={handleCloseMenu} />
+                )}
                 {activeTab === "username" && (
-                  <SetUsername username={userInfo.username} />
+                  <SetUsername username={userInfo.username} onClose={handleCloseMenu} />
                 )}
               </div>
-            </div>{" "}
+            </div>
           </section>
         )}
       </div>
