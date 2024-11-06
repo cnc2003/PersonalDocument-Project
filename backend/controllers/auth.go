@@ -135,7 +135,7 @@ func UpdateUser(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"message": "User updated successfully",
 		"user": gin.H{
-			"id":       user.ID,
+			"user_id":  user.ID,
 			"name":     user.Name,
 			"username": user.Username,
 			"email":    user.Email,
