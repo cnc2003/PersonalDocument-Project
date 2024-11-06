@@ -91,6 +91,9 @@ const SettingPage = () => {
     }
   };
 
+  console.log(activeTab);
+  
+
   return (
     <div className="sticky">
       <span className="bg-[#FAFAFA] w-screen h-screen fixed -z-10"></span>
@@ -109,8 +112,8 @@ const SettingPage = () => {
               <div className="inline-flex rounded-md w-fit" role="group">
                 <button
                   type="button"
-                  className={`inline-flex gap-1 items-center px-4 py-2 text-sm font-medium text-gray-900 bg-transparent border border-gray-900 rounded-s-lg hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white  ${
-                    activeTab === "general" ? "bg-blue-300" : "bg-gray-300"
+                  className={`inline-flex gap-1 items-center px-4 py-2 text-sm font-medium text-gray-900 bg-transparent border rounded-lg hover:bg-amber-600 hover:text-white focus:z-10  ${
+                    activeTab == "general" ? "bg-amber-300 text-orange-700" : "bg-gray-300"
                   }`}
                   onClick={() => handleTabChange("general")}
                 >
@@ -119,8 +122,8 @@ const SettingPage = () => {
                 </button>
                 <button
                   type="button"
-                  className={`inline-flex gap-1 items-center px-4 py-2 text-sm font-medium text-gray-900 bg-transparent border border-gray-900 rounded-e-lg hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white ${
-                    activeTab === "account" ? "bg-blue-300" : "bg-gray-300"
+                  className={`inline-flex gap-1 items-center px-4 py-2 text-sm font-medium text-gray-900 bg-transparent border rounded-e-lg hover:bg-amber-600 hover:text-white focus:z-10   ${
+                    activeTab == "account" ? "bg-amber-300 text-orange-700" : "bg-gray-300"
                   }`}
                   onClick={() => handleTabChange("account")}
                 >
@@ -174,7 +177,7 @@ const SettingPage = () => {
                   </div>
                   <div className="flex flex-col gap-2">
                     <label className="text-neutral-600 font-semibold">
-                      Password
+                      Changing Password
                     </label>
                     <input
                       type="password"
@@ -238,7 +241,7 @@ const SettingPage = () => {
                 </div>
               )}
               <button
-                className="mt-4 px-4 py-2 bg-blue-300 hover:bg-blue-400 rounded-md"
+                className="mt-4 px-2 py-1 w-fit bg-blue-300 hover:bg-blue-400 rounded-md"
                 onClick={handleSave}
                 disabled={
                   (activeTab === "account" &&
