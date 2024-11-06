@@ -89,6 +89,27 @@ const SettingPage = () => {
                 </button>
               </div>
             </div>
+
+            <div className="pt-4 flex flex-col">
+              <div className="border-b-[1px] pb-3 mb-4 font-bold text-lg">
+                Sensitive settings
+              </div>
+              
+              <div className="flex flex-row items-center justify-between mb-4 text-red-600">
+                <div className="flex flex-col">
+                  <span className="font-semibold">Delete Account</span>
+                  <span className="text-sm ">
+                    Delete your account permanently.
+                  </span>
+                </div>
+                <button
+                  className="setbtn bg-red-300 hover:bg-red-400"
+                  onClick={() => setActiveTab("delete_account")}
+                >
+                  Delete account
+                </button>
+              </div>
+            </div>
           </div>
         </section>
 

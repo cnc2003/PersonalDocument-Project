@@ -60,6 +60,7 @@ const NavBar = () => {
   };
 
   const handlerSignout = () => {
+    localStorage.clear();
     navigate("/signin");
   }
 
@@ -73,9 +74,9 @@ const NavBar = () => {
     >
       <div name="nav" className="flex flex-col gap-1">
         <div className="user-info mx-[8px] pt-2 flex gap-2 items-center">
-          <div className={`flex pl-[6px] pr-[8px] py-[4px] justify-center ${isExpanded ? '' : 'px-[4px]'} hover:bg-neutral-500 hover:bg-opacity-10 hover:cursor-pointer rounded-lg`} onClick={() => handleSettingClick()}>
-            <div className={`bg-neutral-300 rounded-xl size-10 mr-[8px] flex items-center justify-center ${isExpanded ? "" : "mr-0"}`}>
-              <img src="/public/userface.svg" className="size-8"/>
+          <div className={`flex pl-[6px] pr-[8px] py-[4px] justify-center ${isExpanded ? '' : 'px-[4px]'} group hover:bg-neutral-500 hover:bg-opacity-10 hover:cursor-pointer rounded-lg`} onClick={() => handleSettingClick()}>
+            <div className={` bg-neutral-300 rounded-xl size-10 mr-[8px] flex items-center justify-center ${isExpanded ? "" : "mr-0"}`}>
+              <img src="/public/userface.svg" className="size-8 group-hover:rotate-45 transition duration-300 ease-out"/>
             </div>
             <div className={`${isExpanded ? "" : "hidden"}`}>
               <p className="mb-0 text-sm font-semibold">{username}</p>
