@@ -66,7 +66,7 @@ const NavBar = () => {
 
   return (
     <div
-      className={`h-screen bg-white bg-opacity-60 text-neutral-800 transition-width duration-300 z-10 ${
+      className={`h-screen bg-white text-neutral-800 transition-width duration-300 z-10 ${
         isExpanded ? "w-64" : "w-16 hover:w-64"
       }`}
       onMouseEnter={() => handleHover(true)}
