@@ -40,6 +40,7 @@ git clone https://github.com/cnc2003/document-management-system.git
 cd document-management-system
 ```
 ```env for backend
+//env file for backend
 DB_HOST=<host>
 DB_PORT=<port>
 DB_USER=<user>
