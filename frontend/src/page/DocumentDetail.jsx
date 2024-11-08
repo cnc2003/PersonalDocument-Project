@@ -65,7 +65,7 @@ const DocumentDetail = () => {
 
   const updateDocument = async (obj) => {
     try {
-      await axios.patch(`http://localhost:8080/documents/${documentId}`, obj, {
+      await axios.patch(`http://localhost:8080/api/documents/${documentId}`, obj, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,

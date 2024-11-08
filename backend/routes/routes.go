@@ -12,35 +12,40 @@ import (
 func SetupRouter() *gin.Engine {
 	router := gin.Default()
 
+	// CORS middleware configuration
 	router.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"http://localhost"}, // Allow React frontend origin
-		AllowMethods:     []string{"GET", "POST","PATCH", "PUT", "DELETE", "OPTIONS"},
+		AllowMethods:     []string{"GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Authorization", "Content-Type"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
 		MaxAge:           12 * time.Hour,
 	}))
 
-	router.POST("/register", controllers.Register)
-	router.POST("/login", controllers.Login)
-	// Protected routes (only accessible with valid JWT)
-	documentRoutes := router.Group("/documents")
-	documentRoutes.Use(middleware.AuthMiddleware())
+	api := router.Group("/api")
 	{
-		documentRoutes.POST("", controllers.CreateDocument)
-		documentRoutes.GET("", controllers.GetDocuments)
-		documentRoutes.GET("/:id", controllers.GetDocumentByID)
-		documentRoutes.PATCH("/:id", controllers.PatchDocumentContent)
-		documentRoutes.PUT("/:id", controllers.UpdateDocument)
-		documentRoutes.DELETE("/:id", controllers.DeleteDocument)
+		api.POST("/register", controllers.Register)
+		api.POST("/login", controllers.Login)
+
+		// Protected routes (only accessible with valid JWT)
+		documentRoutes := api.Group("/documents")
+		documentRoutes.Use(middleware.AuthMiddleware())
+		{
+			documentRoutes.POST("", controllers.CreateDocument)
+			documentRoutes.GET("", controllers.GetDocuments)
+			documentRoutes.GET("/:id", controllers.GetDocumentByID)
+			documentRoutes.PATCH("/:id", controllers.PatchDocumentContent)
+			documentRoutes.PUT("/:id", controllers.UpdateDocument)
+			documentRoutes.DELETE("/:id", controllers.DeleteDocument)
+		}
+
+		userRoutes := api.Group("/users")
+		userRoutes.Use(middleware.AuthMiddleware())
+		{
+			userRoutes.PATCH("", controllers.UpdateUser)
+			userRoutes.DELETE("", controllers.DeleteUser)
+		}
 	}
 
-	userRoutes := router.Group("/users")
-	userRoutes.Use(middleware.AuthMiddleware())
-	{
-		userRoutes.PATCH("", controllers.UpdateUser)
-		userRoutes.DELETE("", controllers.DeleteUser)
-	}
-	
 	return router
 }

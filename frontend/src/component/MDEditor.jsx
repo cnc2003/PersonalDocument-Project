@@ -34,7 +34,7 @@ const MDEditor = () => {
     try {
       const mdContent = turndownService.turndown(content);
       await axios.patch(
-        `http://localhost:8080/documents/${documentId}`,
+        `http://localhost:8080/api/documents/${documentId}`,
         {
           content: mdContent,
         },

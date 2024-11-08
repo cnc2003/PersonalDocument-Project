@@ -9,7 +9,7 @@ const CreateDoc = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `http://localhost:8080/documents`,
+        `http://localhost:8080/api/documents`,
         { title, privacy: "PRIVATE" },
         {
           headers: {

@@ -53,7 +53,7 @@ const AddImageDoc = ({ document, onClose }) => {
 
     try {
       await axios.patch(
-        `http://localhost:8080/documents/${documentId}`,
+        `http://localhost:8080/api/documents/${documentId}`,
         { imageUrl },
         {
           headers: {

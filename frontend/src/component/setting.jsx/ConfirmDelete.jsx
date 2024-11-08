@@ -15,7 +15,7 @@ const ConfirmDelete = ({ onClose }) => {
 
     try {
       const response = await axios.delete(
-        `http://localhost:8080/users`,
+        `http://localhost:8080/api/users`,
         {
           headers: {
             "Content-Type": "application/json",

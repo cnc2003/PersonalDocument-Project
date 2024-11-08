@@ -16,7 +16,7 @@ const NavBar = () => {
 
   const getDocuments = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/documents`, {
+      const response = await axios.get(`http://localhost:8080/api/documents`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`, // JWT token

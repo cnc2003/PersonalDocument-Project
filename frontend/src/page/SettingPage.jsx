@@ -36,7 +36,7 @@ const SettingPage = () => {
   const updateUsername = async () => {
     try {
       const response = await axios.patch(
-        `http://localhost:8080/users`,
+        `http://localhost:8080/api/users`,
         { username: userInfo.username },
         {
           headers: {

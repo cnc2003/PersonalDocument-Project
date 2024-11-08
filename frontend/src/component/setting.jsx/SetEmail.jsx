@@ -39,7 +39,7 @@ const SetEmail = ({ email, onClose }) => {
     if (newEmail.new_email !== "" && newEmail.password !== "") {
       try {
         const response = await axios.patch(
-          `http://localhost:8080/users`,
+          `http://localhost:8080/api/users`,
           { ...newEmail },
           {
             headers: {

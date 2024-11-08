@@ -8,7 +8,7 @@ const DeleteDoc = (props) => {
 
   const handleDelete = async () => {
     try {
-      const response = await axios.delete(`http://localhost:8080/documents/${documentId}`, {
+      const response = await axios.delete(`http://localhost:8080/api/documents/${documentId}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,

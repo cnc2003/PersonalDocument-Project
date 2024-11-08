@@ -2,21 +2,23 @@ import "./App.css";
 import { Link } from "react-router-dom";
 import FloatingEmojis from "./component/FloatingEmojis";
 
-
 function App() {
-
   return (
     <>
       <div className="fixed inset-0 grid place-content-center z-10">
-        <h1 className="text-3xl font-bold underline">
-          Hello Document miner!!!
-        </h1>
-        <Link to={`signin`} className="">
-          singin
-        </Link>
+        <div className="flex">
+          <div>
+            <div className="text-6xl font-bold">
+              Take your time <br /> with your documents
+            </div>
+            <Link to={`signin`} className="">
+              singin
+            </Link>
+          </div>
+        </div>
       </div>
 
-      <FloatingEmojis />
+      {/* <FloatingEmojis /> */}
     </>
   );
 }

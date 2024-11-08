@@ -44,7 +44,7 @@ const SetPassword = ({ onClose }) => {
     try {
       const payload = { password: password.password, new_password: password.new_password };
       const response = await axios.patch(
-        `http://localhost:8080/users`,
+        `http://localhost:8080/api/users`,
         { ...payload },
         {
           headers: {

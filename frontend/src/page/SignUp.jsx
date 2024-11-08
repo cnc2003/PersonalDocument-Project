@@ -52,7 +52,7 @@ export default function SignUp() {
     }
     try {
       const response = await axios.post(
-        "http://localhost:8080/register",
+        "http://localhost:8080/api/register",
         {
           name: credential.user,
           username: credential.user,
