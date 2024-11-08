@@ -138,15 +138,6 @@ INSERT INTO `documents` (`user_id`, `title`, `imageUrl`, `content`, `createdOn`,
 (2, 'Bob\'s Document 3', NULL, 'Content of the third document for Bob.', NOW(), NOW(), 'PRIVATE'),
 (2, 'Bob\'s Document 4', NULL, 'Content of the fourth document for Bob.', NOW(), NOW(), 'PUBLIC');
 
--- Documents for Charlie
-INSERT INTO `documents` (`user_id`, `title`, `imageUrl`, `content`, `createdOn`, `updatedOn`, `privacy`) VALUES
-(3, 'Charlie\'s Document 1', NULL, 'Content of the first document for Charlie.', NOW(), NOW(), 'PRIVATE'),
-(3, 'Charlie\'s Document 2', NULL, 'Content of the second document for Charlie.', NOW(), NOW(), 'PUBLIC');
-
--- Documents for David
-INSERT INTO `documents` (`user_id`, `title`, `imageUrl`, `content`, `createdOn`, `updatedOn`, `privacy`) VALUES
-(4, 'David\'s First Document', NULL, 'This is the content of David\'s first document.', NOW(), NOW(), 'PUBLIC'),
-(4, 'David\'s Second Document', NULL, 'This is the content of David\'s second document.', NOW(), NOW(), 'PRIVATE');
 
 -- Documents for Eve
 INSERT INTO `documents` (`user_id`, `title`, `imageUrl`, `content`, `createdOn`, `updatedOn`, `privacy`) VALUES
