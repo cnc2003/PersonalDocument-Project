@@ -3,7 +3,7 @@
 ## 🚀 Overview
 This project is a **full-stack Document Management System** built with **Go (Gin + GORM)** for the backend and **React.js** for the frontend. The application allows users to register, log in, and manage their personal documents securely.
 
-![Document Detail](https://github.com/user-attachments/assets/587a7d3b-4a38-451a-bcd9-83f070fb07bd)
+![image](https://github.com/user-attachments/assets/87b7be09-9089-4da6-9c27-4a91e772384f)
 
 ## 🛠️ Features
 ### User Authentication
