@@ -81,8 +81,8 @@ func Login(c *gin.Context) {
 func UpdateUser(c *gin.Context) {
 	var user models.User
 	var newUser struct {
-		Username        *string `json:"username"`
-		Email           *string `json:"new_email"`
+		Username        *string `json:"username" gorm:"size:50"`
+		Email           *string `json:"new_email" gorm:"size:50"`
 		ConfirmPassword string  `json:"password"`
 		NewPassword     *string `json:"new_password"`
 	}
@@ -99,18 +99,27 @@ func UpdateUser(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	// Validate lengths
+	if newUser.Username != nil && len(*newUser.Username) > 50 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Username exceeds 50 characters"})
+		return
+	}
+	if len(newUser.ConfirmPassword) > 50 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Password exceeds 50 characters"})
+		return
+	}
+	if newUser.NewPassword != nil && len(*newUser.NewPassword) > 50 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "New password exceeds 50 characters"})
+		return
+	}
+
 	// Compare the provided password with the stored hash
-	if newUser.Username == nil {
-		var passA = []byte(user.Password)
-		var passB = []byte(newUser.ConfirmPassword)
-		if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(newUser.ConfirmPassword)); err != nil {
-			c.JSON(http.StatusUnauthorized, gin.H{
-				"error":        "Incorrect password",
-				"old_password": string(passA),
-				"new_password": string(passB),
-			})
-			return
-		}
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(newUser.ConfirmPassword)); err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"error": "Incorrect password",
+		})
+		return
 	}
 
 	// Update user fields if provided

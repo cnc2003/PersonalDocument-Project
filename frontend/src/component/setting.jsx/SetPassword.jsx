@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 const SetPassword = ({ onClose }) => {
@@ -19,11 +19,6 @@ const SetPassword = ({ onClose }) => {
     setNewPassword({ ...password, [name]: value });
     if (name === "new_password") checkPasswordCriteria(value);
   };
-
-  //   const handlePassword = (e) => {
-  //     const password = e.target.value;
-  //     setNewPassword({ password });
-  //   }
 
   function checkPasswordCriteria(password) {
     setPasswordCriteria({
@@ -47,7 +42,7 @@ const SetPassword = ({ onClose }) => {
       return;
     }
     try {
-        const payload = {password: password.password, new_password: password.new_password}
+      const payload = { password: password.password, new_password: password.new_password };
       const response = await axios.patch(
         `http://localhost:8080/users`,
         { ...payload },
@@ -79,7 +74,7 @@ const SetPassword = ({ onClose }) => {
         Change password
         <p className="text-sm text-neutral-500">
           Use a password at least 8 characters long with both at least 1
-          uppercase letters and numbers .
+          uppercase letters and numbers.
         </p>
       </div>
       {alertMessage && (
