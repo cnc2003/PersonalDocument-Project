@@ -75,7 +75,7 @@ const SetEmail = ({ email, onClose }) => {
           🙅‍♂️ {alertMessage}{" "}
         </div>
       )}
-      <div className="my-3">Enter new email</div>
+      <div className="my-3">Enter new email </div>
       <input
         type="email"
         placeholder="New email"
@@ -84,7 +84,7 @@ const SetEmail = ({ email, onClose }) => {
         onChange={handleEmailChange}
         className="w-full rounded-md border border-neutral-400 focus:outline-2 focus:outline-blue-400 pl-1 py-1 "
       />
-      <div className="my-3">Enter your password.</div>
+      <div className="my-3">Enter your password </div>
       <input
         type="password"
         placeholder="Password"
@@ -94,13 +94,14 @@ const SetEmail = ({ email, onClose }) => {
         className="w-full rounded-md border border-neutral-400 focus:outline-2 focus:outline-blue-400 pl-1 py-1 "
       />
       <button
-        className="setbtn mt-[14px] bg-blue-400 hover:bg-blue-500 text-white disabled:cursor-not-allowed disabled:bg-slate-600"
+        className="setbtn mt-[14px] bg-blue-400 hover:bg-blue-500 text-white disabled:cursor-not-allowed disabled:bg-slate-200"
         onClick={saveEmail}
+        disabled={newEmail.new_email === "" || newEmail.password === ""}
       >
         Save
       </button>
-      {inputError.email && <p>Email is required</p>}
-      {inputError.password && <p>Password is required</p>}
+      
+      
     </div>
   );
 };
