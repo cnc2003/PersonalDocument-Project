@@ -38,6 +38,14 @@ This project is a **full-stack Document Management System** built with **Go (Gin
 ```bash
 git clone https://github.com/cnc2003/document-management-system.git
 cd document-management-system
-
+```
+```env for backend
+DB_HOST=<host>
+DB_PORT=<port>
+DB_USER=<user>
+DB_PASSWORD=<password>
+DB_NAME=<database name>
+JWT_SECRET=<your secret>
+```
 ## 🚀 Showcase
 
