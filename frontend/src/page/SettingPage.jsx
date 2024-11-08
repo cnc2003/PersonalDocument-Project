@@ -4,6 +4,7 @@ import "./Setting.css";
 import SetEmail from "../component/setting.jsx/SetEmail";
 import SetPassword from "../component/setting.jsx/SetPassword";
 import axios from "axios";
+import ConfirmDelete from "../component/setting.jsx/ConfirmDelete";
 
 const SettingPage = () => {
   const [activeTab, setActiveTab] = useState("");
@@ -77,8 +78,8 @@ const SettingPage = () => {
             <div className="pt-4 flex flex-col">
               <div className="border-b-[1px] pb-3 mb-4 font-bold text-lg">
                 My profile
-              </div>              
-              <div className="flex flex-row items-center justify-between ">
+              </div>
+              <div className="flex flex-row items-center justify-between mb-4">
                 <div className="flex flex-col">
                   <span className="font-semibold">Username</span>
                   <span className="text-sm text-gray-500">
@@ -90,20 +91,25 @@ const SettingPage = () => {
                   <input
                     type="text"
                     name="username"
+                    defaultValue={username}
                     maxLength={50}
                     onChange={handleUsernameChange}
                     className="w-full rounded-md border border-neutral-400 focus:outline-2 focus:outline-blue-400 pl-1 py-1"
                   />
-                  <button className="setbtn" onClick={updateUsername}>
+                  <button
+                    className="setbtn bg-green-300 hover:bg-green-400 disabled:bg-neutral-400 disabled:cursor-not-allowed"
+                    disabled={!userInfo.username.length}
+                    onClick={updateUsername}
+                  >
                     save
                   </button>
                 </div>
-              </div>       
+              </div>
               {alertMessage && (
                 <div className="bg-red-100 text-red-800 text-sm font-medium px-2.5 py-0.5 mb-2 rounded text-center ml-auto">
                   🙅‍♂️ {alertMessage}
                 </div>
-              )}       
+              )}
               <div className="flex flex-row items-center justify-between mb-4">
                 <div className="flex flex-col">
                   <span className="font-semibold">Email</span>
@@ -170,6 +176,9 @@ const SettingPage = () => {
                 )}
                 {activeTab === "password" && (
                   <SetPassword onClose={handleCloseMenu} />
+                )}
+                {activeTab === "delete_account" && (
+                  <ConfirmDelete onClose={handleCloseMenu} />
                 )}
               </div>
             </div>
