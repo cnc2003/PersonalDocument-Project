@@ -84,7 +84,7 @@ func UpdateUser(c *gin.Context) {
 		Username        *string `json:"username"`
 		Email           *string `json:"new_email"`
 		ConfirmPassword string  `json:"password"`
-		NewPassword     *string `json:"newpassword"`
+		NewPassword     *string `json:"new_password"`
 	}
 
 	// Get user from token
@@ -100,15 +100,17 @@ func UpdateUser(c *gin.Context) {
 		return
 	}
 	// Compare the provided password with the stored hash
-	var passA = []byte(user.Password)
-	var passB = []byte(newUser.ConfirmPassword)
-	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(newUser.ConfirmPassword)); err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{
-			"error":        "Incorrect password",
-			"old_password": string(passA),
-			"new_password": string(passB),
-		})
-		return
+	if newUser.Username == nil {
+		var passA = []byte(user.Password)
+		var passB = []byte(newUser.ConfirmPassword)
+		if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(newUser.ConfirmPassword)); err != nil {
+			c.JSON(http.StatusUnauthorized, gin.H{
+				"error":        "Incorrect password",
+				"old_password": string(passA),
+				"new_password": string(passB),
+			})
+			return
+		}
 	}
 
 	// Update user fields if provided

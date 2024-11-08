@@ -7,7 +7,7 @@ const SetEmail = ({ email, onClose }) => {
     new_email: "",
     password: "",
   });
-
+  
   const handleEmailChange = (e) => {
     const email = e.target.value;
     setNewEmail({ ...newEmail, new_email: email });

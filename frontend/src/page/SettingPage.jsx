@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import NavBar from "../component/NavBar";
 import "./Setting.css";
 import SetEmail from "../component/setting.jsx/SetEmail";
-import SetUsername from "../component/setting.jsx/SetUsername";
+import SetPassword from "../component/setting.jsx/SetPassword";
+import axios from "axios";
 
 const SettingPage = () => {
   const [activeTab, setActiveTab] = useState("");
+  const [username, setUsername] = useState(localStorage.getItem("username"));
   const [userInfo, setUserInfo] = useState({
     username: "",
     email: "",
@@ -21,8 +23,34 @@ const SettingPage = () => {
 
   function handleCloseMenu() {
     setActiveTab("");
-    loadUserInfo()
+    loadUserInfo();
   }
+
+  const handleUsernameChange = (e) => {
+    const username = e.target.value;
+    setUserInfo({ ...userInfo, username: username });
+  };
+
+  const updateUsername = async () => {
+    try {
+      const response = await axios.patch(
+        `http://localhost:8080/users`,
+        { username: userInfo.username },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          withCredentials: true,
+        }
+      );
+      setUsername(response.data.username);
+      setUserInfo({ ...userInfo, username: "" });
+      alert("Username updated successfully");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     loadUserInfo();
@@ -52,13 +80,21 @@ const SettingPage = () => {
                 <div className="flex flex-col">
                   <span className="font-semibold">Username</span>
                   <span className="text-sm text-gray-500">
-                    {/* {userInfo.username || "No username"} */}
-                    Change your preffered username here.
+                    {username || "No username"}
+                    {/* Change your preffered username here. */}
                   </span>
                 </div>
-                {/* <button className="setbtn" onClick={() => setActiveTab("")}>
-                  Change name
-                </button> */}
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    name="username"
+                    onChange={handleUsernameChange}
+                    className="w-full rounded-md border border-neutral-400 focus:outline-2 focus:outline-blue-400 pl-1 py-1"
+                  />
+                  <button className="setbtn" onClick={updateUsername}>
+                    save
+                  </button>
+                </div>
               </div>
               <div className="flex flex-row items-center justify-between mb-4">
                 <div className="flex flex-col">
@@ -94,7 +130,7 @@ const SettingPage = () => {
               <div className="border-b-[1px] pb-3 mb-4 font-bold text-lg">
                 Sensitive settings
               </div>
-              
+
               <div className="flex flex-row items-center justify-between mb-4 text-red-600">
                 <div className="flex flex-col">
                   <span className="font-semibold">Delete Account</span>
@@ -124,8 +160,8 @@ const SettingPage = () => {
                 {activeTab === "email" && (
                   <SetEmail email={userInfo.email} onClose={handleCloseMenu} />
                 )}
-                {activeTab === "username" && (
-                  <SetUsername username={userInfo.username} onClose={handleCloseMenu} />
+                {activeTab === "password" && (
+                  <SetPassword onClose={handleCloseMenu} />
                 )}
               </div>
             </div>
