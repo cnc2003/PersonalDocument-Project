@@ -39,6 +39,7 @@ func SetupRouter() *gin.Engine {
 	userRoutes.Use(middleware.AuthMiddleware())
 	{
 		userRoutes.PATCH("", controllers.UpdateUser)
+		userRoutes.DELETE("", controllers.DeleteUser)
 	}
 	
 	return router

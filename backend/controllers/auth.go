@@ -4,9 +4,10 @@ import (
 	"document-backend/config"
 	"document-backend/models"
 	"document-backend/utils"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
-	"net/http"
 )
 
 func Register(c *gin.Context) {
@@ -115,11 +116,13 @@ func UpdateUser(c *gin.Context) {
 	}
 
 	// Compare the provided password with the stored hash
-	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(newUser.ConfirmPassword)); err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{
-			"error": "Incorrect password",
-		})
-		return
+	if newUser.ConfirmPassword != "" {
+		if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(newUser.ConfirmPassword)); err != nil {
+			c.JSON(http.StatusUnauthorized, gin.H{
+				"error": "Incorrect password",
+			})
+			return
+		}
 	}
 
 	// Update user fields if provided
@@ -149,4 +152,21 @@ func UpdateUser(c *gin.Context) {
 		"username": user.Username,
 		"email":    user.Email,
 	})
+}
+
+func DeleteUser(c *gin.Context) {
+	var user models.User
+	// Get user from token
+	userID, _ := c.Get("user_id")
+	if err := config.DB.Where("id = ?", userID).First(&user).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
+		return
+	}
+
+	if err := config.DB.Delete(&user).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete user"})
+		return
+	}
+
+	c.JSON(http.StatusOK, user)
 }

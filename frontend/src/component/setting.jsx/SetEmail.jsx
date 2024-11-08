@@ -79,6 +79,7 @@ const SetEmail = ({ email, onClose }) => {
         type="email"
         placeholder="New email"
         value={newEmail.new_email}
+        maxLength={50}
         onChange={handleEmailChange}
         className="w-full rounded-md border border-neutral-400 focus:outline-2 focus:outline-blue-400 pl-1 py-1 "
       />
@@ -87,6 +88,7 @@ const SetEmail = ({ email, onClose }) => {
         type="password"
         placeholder="Password"
         value={newEmail.password}
+        maxLength={50}
         onChange={handlePassword}
         className="w-full rounded-md border border-neutral-400 focus:outline-2 focus:outline-blue-400 pl-1 py-1 "
       />

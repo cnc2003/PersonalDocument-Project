@@ -8,6 +8,7 @@ import axios from "axios";
 const SettingPage = () => {
   const [activeTab, setActiveTab] = useState("");
   const [username, setUsername] = useState(localStorage.getItem("username"));
+  const [alertMessage, setAlertMessage] = useState("");
   const [userInfo, setUserInfo] = useState({
     username: "",
     email: "",
@@ -48,6 +49,7 @@ const SettingPage = () => {
       setUserInfo({ ...userInfo, username: "" });
       alert("Username updated successfully");
     } catch (error) {
+      // setAlertMessage(error.response.data.error);
       console.log(error);
     }
   };
@@ -75,8 +77,8 @@ const SettingPage = () => {
             <div className="pt-4 flex flex-col">
               <div className="border-b-[1px] pb-3 mb-4 font-bold text-lg">
                 My profile
-              </div>
-              <div className="flex flex-row items-center justify-between mb-4">
+              </div>              
+              <div className="flex flex-row items-center justify-between ">
                 <div className="flex flex-col">
                   <span className="font-semibold">Username</span>
                   <span className="text-sm text-gray-500">
@@ -88,6 +90,7 @@ const SettingPage = () => {
                   <input
                     type="text"
                     name="username"
+                    maxLength={50}
                     onChange={handleUsernameChange}
                     className="w-full rounded-md border border-neutral-400 focus:outline-2 focus:outline-blue-400 pl-1 py-1"
                   />
@@ -95,7 +98,12 @@ const SettingPage = () => {
                     save
                   </button>
                 </div>
-              </div>
+              </div>       
+              {alertMessage && (
+                <div className="bg-red-100 text-red-800 text-sm font-medium px-2.5 py-0.5 mb-2 rounded text-center ml-auto">
+                  🙅‍♂️ {alertMessage}
+                </div>
+              )}       
               <div className="flex flex-row items-center justify-between mb-4">
                 <div className="flex flex-col">
                   <span className="font-semibold">Email</span>
