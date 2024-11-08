@@ -55,7 +55,7 @@ const SetPassword = ({ onClose }) => {
         }
       );
       if (response && response.data) {
-        console.log(response.data);
+        alert("Password updated successfully");
         onClose();
       }
     } catch (error) {

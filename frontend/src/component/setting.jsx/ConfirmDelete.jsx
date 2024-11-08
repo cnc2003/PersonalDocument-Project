@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ConfirmDelete = ({ onClose }) => {
   const email = localStorage.getItem("email");
@@ -8,20 +9,29 @@ const ConfirmDelete = ({ onClose }) => {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
+  const navigate = useNavigate();
   const handleDeleteUser = async () => {
+    console.log(localStorage.getItem("token"));
+
     try {
       const response = await axios.delete(
         `http://localhost:8080/users`,
-        { password },
         {
           headers: {
+            "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          data: {
+            password: password,
           },
           withCredentials: true,
         }
       );
-      alert("Your account has been deleted.");
-      navigate("/"); // Refresh the page to show the updated image
+      if (response && response.data) {
+        localStorage.clear();
+        alert(`Account ${response.data.email} deleted successfully`);
+        navigate("/signin");
+      }
     } catch (error) {
       setAlertMessage(error.response.data.error);
     }

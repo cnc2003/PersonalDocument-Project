@@ -124,7 +124,6 @@ func UpdateUser(c *gin.Context) {
 			return
 		}
 	}
-
 	// Update user fields if provided
 	if newUser.Username != nil {
 		user.Username = *newUser.Username
@@ -156,10 +155,26 @@ func UpdateUser(c *gin.Context) {
 
 func DeleteUser(c *gin.Context) {
 	var user models.User
+	var credential struct {	
+		Password string `json:"password"`
+	}
+	
+	if err := c.ShouldBindJSON(&credential); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	// Get user from token
 	userID, _ := c.Get("user_id")
 	if err := config.DB.Where("id = ?", userID).First(&user).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
+		return
+	}
+
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(credential.Password)); err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"error": "Incorret password",
+		})
 		return
 	}
 

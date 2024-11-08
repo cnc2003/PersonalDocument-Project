@@ -52,6 +52,7 @@ const SetEmail = ({ email, onClose }) => {
         if (response && response.data) {
           loadNewData(response.data);
         }
+        alert("Email updated successfully");
         onClose();
       } catch (error) {
         console.log(error);
