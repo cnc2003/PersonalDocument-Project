@@ -6,8 +6,8 @@ import { useParams } from "react-router-dom";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { DocumentContent } from "../page/DocumentDetail";
-import "./MDEditor.css";
-import MDmenubar from "./MDmenubar";
+import "MDEditor.css";
+import MDmenubar from "MDmenubar";
 import Placeholder from "@tiptap/extension-placeholder";
 
 const MDEditor = () => {
