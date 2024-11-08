@@ -11,6 +11,7 @@ const DocumentList = () => {
   const { username } = useParams();
   const navigate = useNavigate();
   const [isCreateMenuOpen, setIsCreateMenuOpen] = useState(false);
+
   const getDocuments = async () => {
     try {
       const response = await axios.get(`http://localhost:8080/api/documents`, {
