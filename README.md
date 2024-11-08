@@ -49,4 +49,7 @@ DB_NAME=<database name>
 JWT_SECRET=<your secret>
 ```
 ## 🚀 Showcase
+![image](https://github.com/user-attachments/assets/bcee3e3c-acf6-4a2c-988a-094d55a726f5)
+![image](https://github.com/user-attachments/assets/91fa2550-3f8f-47ca-8cf7-ffd81b75dedb)
+![image](https://github.com/user-attachments/assets/708db830-8beb-4aa2-9267-b4258953ad54)
 
