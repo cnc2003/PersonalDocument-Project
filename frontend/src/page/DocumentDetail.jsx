@@ -43,7 +43,7 @@ const DocumentDetail = () => {
   const fetchDocument = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/documents/${documentId}`,
+        `http://localhost:8080/api/documents/${documentId}`,
         {
           headers: {
             "Content-Type": "application/json",
