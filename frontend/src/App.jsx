@@ -24,7 +24,7 @@ function App() {
         </div>
       </div>
       <footer className="w-[100%] text-center fixed bottom-0 left-0 mb-2 text-amber-950">
-        <p>&copy; {new Date().getFullYear()} cnc2003</p>
+        <a href="https://github.com/cnc2003/PersonalDocument-Project"><p>&copy; {new Date().getFullYear()} cnc2003</p></a>
       </footer>
       {/* <FloatingEmojis /> */}
     </>
