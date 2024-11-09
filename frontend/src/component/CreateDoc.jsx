@@ -3,13 +3,14 @@ import axios from "axios";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
 const CreateDoc = () => {
+  const BASE_URL = import.meta.env.VITE_API_URL;
   const [title, setTitle] = useState("");
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `http://localhost:8080/api/documents`,
+        `${BASE_URL}/documents`,
         { title, privacy: "PRIVATE" },
         {
           headers: {

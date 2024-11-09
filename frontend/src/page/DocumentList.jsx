@@ -7,6 +7,7 @@ import NavBar from "../component/NavBar";
 import CreateDoc from "../component/CreateDoc";
 
 const DocumentList = () => {
+  const BASE_URL = import.meta.env.VITE_API_URL;
   const [documents, setDocuments] = useState([]);
   const { username } = useParams();
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const DocumentList = () => {
 
   const getDocuments = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/documents`, {
+      const response = await axios.get(`${BASE_URL}/documents`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`, // JWT token

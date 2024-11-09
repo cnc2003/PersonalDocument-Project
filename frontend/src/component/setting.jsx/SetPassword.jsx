@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 const SetPassword = ({ onClose }) => {
   const [alertMessage, setAlertMessage] = useState("");
   const [password, setNewPassword] = useState({
@@ -42,9 +44,12 @@ const SetPassword = ({ onClose }) => {
       return;
     }
     try {
-      const payload = { password: password.password, new_password: password.new_password };
+      const payload = {
+        password: password.password,
+        new_password: password.new_password,
+      };
       const response = await axios.patch(
-        `http://localhost:8080/api/users`,
+        `${BASE_URL}/users`,
         { ...payload },
         {
           headers: {

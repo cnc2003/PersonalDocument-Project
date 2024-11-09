@@ -2,13 +2,14 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
 const DeleteDoc = (props) => {
+  const BASE_URL = import.meta.env.VITE_API_URL;
   const { document } = props;
   const { documentId } = useParams();
   const navigate = useNavigate();
 
   const handleDelete = async () => {
     try {
-      const response = await axios.delete(`http://localhost:8080/api/documents/${documentId}`, {
+      const response = await axios.delete(`${BASE_URL}/documents/${documentId}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,

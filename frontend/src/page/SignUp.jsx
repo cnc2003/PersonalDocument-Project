@@ -5,6 +5,7 @@ import "../App.css";
 import FloatingEmojis from "../component/FloatingEmojis";
 import { JwtDecode } from "../util/util";
 export default function SignUp() {
+  const BASE_URL  = import.meta.env.VITE_API_URL;
   const [credential, setCredential] = useState({
     user: "",
     email: "",
@@ -52,7 +53,7 @@ export default function SignUp() {
     }
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/register",
+        `${BASE_URL}/register`,
         {
           name: credential.user,
           username: credential.user,

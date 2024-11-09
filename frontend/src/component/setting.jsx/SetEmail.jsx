@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
 const SetEmail = ({ email, onClose }) => {
   const [alertMessage, setAlertMessage] = useState("");
   const [newEmail, setNewEmail] = useState({
@@ -39,7 +40,7 @@ const SetEmail = ({ email, onClose }) => {
     if (newEmail.new_email !== "" && newEmail.password !== "") {
       try {
         const response = await axios.patch(
-          `http://localhost:8080/api/users`,
+          `${BASE_URL}/users`,
           { ...newEmail },
           {
             headers: {

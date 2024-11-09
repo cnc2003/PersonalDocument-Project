@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
 const ConfirmDelete = ({ onClose }) => {
   const email = localStorage.getItem("email");
   const [password, setPassword] = useState("");
@@ -15,7 +16,7 @@ const ConfirmDelete = ({ onClose }) => {
 
     try {
       const response = await axios.delete(
-        `http://localhost:8080/api/users`,
+        `${BASE_URL}/users`,
         {
           headers: {
             "Content-Type": "application/json",

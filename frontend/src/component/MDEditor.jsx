@@ -11,6 +11,7 @@ import MDmenubar from "./MDmenubar";
 import Placeholder from "@tiptap/extension-placeholder";
 
 const MDEditor = () => {
+  const BASE_URL = import.meta.env.VITE_API_URL;
   const { content } = useContext(DocumentContent);
   const [editorState, setEditorState] = useState("");
   const { documentId } = useParams();
@@ -34,7 +35,7 @@ const MDEditor = () => {
     try {
       const mdContent = turndownService.turndown(content);
       await axios.patch(
-        `http://localhost:8080/api/documents/${documentId}`,
+        `${BASE_URL}/documents/${documentId}`,
         {
           content: mdContent,
         },

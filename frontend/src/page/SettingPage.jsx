@@ -7,6 +7,7 @@ import axios from "axios";
 import ConfirmDelete from "../component/setting.jsx/ConfirmDelete";
 
 const SettingPage = () => {
+  const BASE_URL = import.meta.env.VITE_API_URL;
   const [activeTab, setActiveTab] = useState("");
   const [username, setUsername] = useState(localStorage.getItem("username"));
   const [alertMessage, setAlertMessage] = useState("");
@@ -36,7 +37,7 @@ const SettingPage = () => {
   const updateUsername = async () => {
     try {
       const response = await axios.patch(
-        `http://localhost:8080/api/users`,
+        `${BASE_URL}/users`,
         { username: userInfo.username },
         {
           headers: {

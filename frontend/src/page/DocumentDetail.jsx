@@ -11,6 +11,7 @@ import AddImageDoc from "../component/AddImageDoc";
 export const DocumentContent = createContext(null);
 
 const DocumentDetail = () => {
+  const BASE_URL = import.meta.env.VITE_API_URL;
   const { username, documentId } = useParams();
   const [document, setDocument] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -43,7 +44,7 @@ const DocumentDetail = () => {
   const fetchDocument = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/documents/${documentId}`,
+        `${BASE_URL}/documents/${documentId}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -65,7 +66,7 @@ const DocumentDetail = () => {
 
   const updateDocument = async (obj) => {
     try {
-      await axios.patch(`http://localhost:8080/api/documents/${documentId}`, obj, {
+      await axios.patch(`${BASE_URL}/documents/${documentId}`, obj, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,

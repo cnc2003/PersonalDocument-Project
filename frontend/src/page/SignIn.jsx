@@ -4,6 +4,8 @@ import axios from "axios";
 import { checkNotExpire, JwtDecode } from "../util/util";
 import FloatingEmojis from "../component/FloatingEmojis";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 export default function SignIn() {
   const [credential, setCredential] = useState({
     user: "",
@@ -15,7 +17,7 @@ export default function SignIn() {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/login",
+        `${BASE_URL}/login`,
         {
           ...credential,
         },
@@ -36,6 +38,7 @@ export default function SignIn() {
       const username = localStorage.getItem("username");
       return navigate(`/${username}/document`);
     } catch (error) {
+      console.log(error);
       setAlert(error.response.data.error);
       setTimeout(() => {
         setAlert("");

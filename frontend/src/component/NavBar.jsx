@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
 const NavBar = () => {
+  const BASE_URL = import.meta.env.VITE_API_URL;
   const [isExpanded, setIsExpanded] = useState(false);
   const [isLockExpanded, setIsLockExpanded] = useState(false);
   const [isUserEdit, setIsUserEdit] = useState(false);
@@ -16,7 +17,7 @@ const NavBar = () => {
 
   const getDocuments = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/documents`, {
+      const response = await axios.get(`${BASE_URL}/documents`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`, // JWT token
