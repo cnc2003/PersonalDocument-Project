@@ -40,7 +40,7 @@ const ConfirmDelete = ({ onClose }) => {
   return (
     <div className="w-[460px] p-8 rounded-xl bg-white text-neutral-800 flex flex-col font-medium justify-center text-center">
       <img
-        src="icon/big_alert.svg"
+        src="/icon/big_alert.svg"
         alt=""
         className="size-14 mx-auto mb-4"
       />

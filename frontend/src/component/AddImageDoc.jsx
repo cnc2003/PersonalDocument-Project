@@ -43,7 +43,10 @@ const AddImageDoc = ({ document, onClose, onUpdate }) => {
 
   const handleUpload = async () => {
     if (!imageUrl || !isValidUrl) return;
-
+    if (mode == "random") {
+      setImageUrl(getRandomImage());
+      console.log(imageUrl);
+    }
     try {
       const response = await axios.patch(
         `${BASE_URL}/documents/${documentId}`,
@@ -104,7 +107,7 @@ const AddImageDoc = ({ document, onClose, onUpdate }) => {
             </button>
           </div>
           
-          <div
+          {/* <div
             className={`${
               mode === "random" ? "text-sky-400 border-b-2 border-sky-400" : ""
             }`}
@@ -115,7 +118,7 @@ const AddImageDoc = ({ document, onClose, onUpdate }) => {
             >
               Random
             </button>
-          </div>
+          </div> */}
         </div>
         {mode === "url" && (
           <input
@@ -123,7 +126,7 @@ const AddImageDoc = ({ document, onClose, onUpdate }) => {
             placeholder="Enter image URL"
             value={imageUrl}
             onChange={handleUrlChange}
-            className={`border p-2 rounded ${
+            className={`w-full rounded-md border border-neutral-400 focus:outline-2 focus:outline-blue-400 pl-1 py-1  ${
               isValidUrl ? "" : "border-red-500"
             }`}
           />
@@ -158,9 +161,9 @@ const AddImageDoc = ({ document, onClose, onUpdate }) => {
         {!isValidUrl && <span className="text-red-500">Invalid image URL</span>}
         <div className="flex flex-row gap-4">
           <button
-            className="setbtn text-neutral-800"
+            className="setbtn text-neutral-800 disabled:bg-red-300"
             onClick={handleUpload}
-            disabled={!isValidUrl}
+            disabled={mode != "random" && !isValidUrl}
           >
             {mode == "url" ? "Update" : "Save"}
           </button>
