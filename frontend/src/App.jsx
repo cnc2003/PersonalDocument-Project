@@ -20,7 +20,7 @@ function App() {
           </Link>
         </div>
         <div>
-          <img src="/public/brain.svg" className="size-60 hover:rotate-12 transition duration-300 cursor-progress cursor- [url(/public/buld.svg),_pointer]" />
+          <img src="icon/brain.svg" className="size-60 hover:rotate-12 transition duration-300 cursor-progress cursor- [url(/public/buld.svg),_pointer]" />
         </div>
       </div>
       <footer className="w-[100%] text-center fixed bottom-0 left-0 mb-2 text-amber-950">

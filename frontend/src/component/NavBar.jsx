@@ -76,7 +76,7 @@ const NavBar = () => {
         <div className="user-info mx-[8px] pt-2 flex gap-2 items-center">
           <div className={`flex pl-[6px] pr-[8px] py-[4px] justify-center ${isExpanded ? '' : 'px-[4px]'} group hover:bg-neutral-500 hover:bg-opacity-10 hover:cursor-pointer rounded-lg`} onClick={() => handleSettingClick()}>
             <div className={` bg-neutral-300 rounded-xl size-10 mr-[8px] flex items-center justify-center ${isExpanded ? "" : "mr-0"}`}>
-              <img src="/public/userface.svg" className="size-8 group-hover:rotate-45 transition duration-300 ease-out"/>
+              <img src="icon/userface.svg" className="size-8 group-hover:rotate-45 transition duration-300 ease-out"/>
             </div>
             <div className={`${isExpanded ? "" : "hidden"}`}>
               <p className="mb-0 text-sm font-semibold">{username}</p>
@@ -85,7 +85,7 @@ const NavBar = () => {
           </div>
           {/* <div className={`ml-auto pr-2 flex gap-2 ${isExpanded ? "" : "hidden"}`}  >
             <img
-              src="/public/edit_square.svg"
+              src="icon/edit_square.svg"
               className="hover:cursor-pointer hover:scale-105 transition"
             ></img>
           </div> */}
@@ -96,7 +96,7 @@ const NavBar = () => {
             className={`flex gap-2 w-full font-semibold bg-amber-100 px-[8px] py-[4px] text-neutral-600 hover:cursor-pointer hover:bg-amber-200 rounded-md transition duration-100 ${isExpanded ? "" : "justify-center"}`}
             onClick={handleHomeClick}
           >
-            <img src="/public/home.svg" />
+            <img src="icon/home.svg" />
             <span className={`${isExpanded ? "" : "hidden"}`}>Home</span>
           </div>
         </div>
@@ -124,7 +124,7 @@ const NavBar = () => {
             className={`flex gap-2 w-full font-semibold bg-red-100 px-[8px] py-[4px] text-neutral-600 hover:cursor-pointer hover:bg-red-200 rounded-md transition duration-100 ${isExpanded ? "" : "justify-center"}`}
             onClick={handlerSignout}
           >
-            <img src="/public/logout.svg" />
+            <img src="icon/logout.svg" />
             <span className={`${isExpanded ? "" : "hidden"}`}>Signout</span>
           </div>
         </div>
