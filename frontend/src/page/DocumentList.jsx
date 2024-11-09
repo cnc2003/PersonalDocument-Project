@@ -32,6 +32,7 @@ const DocumentList = () => {
     setIsCreateMenuOpen(!isCreateMenuOpen);
   };
 
+
   useEffect(() => {
     getDocuments();
   }, []);

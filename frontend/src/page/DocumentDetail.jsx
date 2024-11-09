@@ -78,6 +78,10 @@ const DocumentDetail = () => {
     }
   };
 
+  const handleUpdateImage = (newImageUrl) => {
+    setDocument({ ...document, imageUrl: newImageUrl });
+  };
+
   useEffect(() => {
     fetchDocument();
     setIsEmojiPickerOpen(false);
@@ -167,12 +171,12 @@ const DocumentDetail = () => {
                 </div>
               )}
             </div>
-            <div className="flex flex-col md:mx-[14rem] mx-[3rem] gap-4">
+            <div className="flex flex-col md:mx-[14rem] mx-[3rem] gap-2">
               <div className="">
                 <textarea
                   value={title}
                   onChange={handleTitleChange}
-                  className="w-full text-4xl font-bold mt-4 bg-transparent border-none focus:outline-none resize-none overflow-hidden"
+                  className="w-full text-4xl font-bold mt-4 pb-2 bg-transparent border-none focus:outline-none resize-none overflow-hidden"
                   rows="1"
                   style={{ whiteSpace: "pre-wrap" }}
                 />
@@ -208,7 +212,7 @@ const DocumentDetail = () => {
                 onClick={() => handleImageMenu()}
               />
               <div className="z-20">
-                <AddImageDoc document={document} onClose={handleImageMenu} />
+                <AddImageDoc document={document} onClose={handleImageMenu} onUpdate={handleUpdateImage} />
               </div>
             </div>
           </section>
