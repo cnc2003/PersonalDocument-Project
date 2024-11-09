@@ -31,28 +31,25 @@ const DocumentDetail = () => {
 
   const handleImageMenu = () => {
     setIsImagePickerOpen(!isImagePickerOpen);
-  }
+  };
 
   const handleEmojiChange = async (event) => {
     const newEmoji = event.emoji;
     await updateDocument({ emoji: newEmoji });
-    document.emoji = newEmoji
+    document.emoji = newEmoji;
     setEmoji(newEmoji);
     setIsEmojiPickerOpen(false);
   };
 
   const fetchDocument = async () => {
     try {
-      const response = await axios.get(
-        `${BASE_URL}/documents/${documentId}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          withCredentials: true,
-        }
-      );
+      const response = await axios.get(`${BASE_URL}/documents/${documentId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        withCredentials: true,
+      });
       setDocument(response.data);
       setTitle(response.data.title);
       setEmoji(response.data.emoji || "📄");
@@ -128,13 +125,13 @@ const DocumentDetail = () => {
             {document.imageUrl && (
               <div className="w-full h-64 overflow-hidden group">
                 {document.imageUrl && (
-                <div
-                  className="absolute group-hover:opacity-100 scale-90 opacity-0 right-3 m-2 btn w-fit pl-[4px] pr-[6px] flex justify-center gap-1 font-normal text-gray-600 bg-opacity-0 hover:bg-neutral-900 hover:bg-opacity-20 hover:cursor-pointer transition duration-300 "
-                  onClick={() => handleImageMenu()}
-                >
-                  <ImageIcon /> Change Cover
-                </div>
-              )}
+                  <div
+                    className="absolute group-hover:opacity-100 scale-90 opacity-0 right-3 m-2 btn w-fit pl-[4px] pr-[6px] flex justify-center gap-1 font-normal text-gray-600 bg-opacity-0 hover:bg-neutral-900 hover:bg-opacity-20 hover:cursor-pointer transition duration-300 "
+                    onClick={() => handleImageMenu()}
+                  >
+                    <ImageIcon /> Change Cover
+                  </div>
+                )}
                 <img src={document.imageUrl} className="w-full object-cover" />
               </div>
             )}
@@ -161,16 +158,16 @@ const DocumentDetail = () => {
                 </div>
               )}
             </div>
-            <div className="h-8 mt-2 md:mx-[14rem] mx-[3rem] opacity-0 hover:opacity-100 transition duration-300">
-              {!document.imageUrl && (
+            {!document.imageUrl && (
+              <div className="h-8 mt-2 md:mx-[14rem] mx-[3rem] opacity-0 hover:opacity-100 transition duration-300">
                 <div
                   className="btn w-fit pl-[4px] pr-[6px] flex justify-center gap-1 font-normal text-gray-800 bg-opacity-0 hover:bg-amber-200 hover:cursor-pointer transition duration-300 "
                   onClick={() => handleImageMenu()}
                 >
                   <ImageIcon /> Add Cover
                 </div>
-              )}
-            </div>
+              </div>
+            )}
             <div className="flex flex-col md:mx-[14rem] mx-[3rem] gap-2">
               <div className="">
                 <textarea
@@ -212,7 +209,11 @@ const DocumentDetail = () => {
                 onClick={() => handleImageMenu()}
               />
               <div className="z-20">
-                <AddImageDoc document={document} onClose={handleImageMenu} onUpdate={handleUpdateImage} />
+                <AddImageDoc
+                  document={document}
+                  onClose={handleImageMenu}
+                  onUpdate={handleUpdateImage}
+                />
               </div>
             </div>
           </section>
