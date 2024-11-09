@@ -20,7 +20,7 @@ import {
   Underline,
   Undo,
 } from "lucide-react";
-import './MDEditor.css';
+import './MDeditor.css';
 
 const MDmenubar = ({ editor }) => {
   return (
