@@ -14,7 +14,7 @@ func SetupRouter() *gin.Engine {
 
 	// CORS middleware configuration
 	router.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost"}, // Allow React frontend origin
+		AllowOrigins:     []string{"http://localhost", "http://localhost:5500"}, // Allow React frontend origin
 		AllowMethods:     []string{"GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Authorization", "Content-Type"},
 		ExposeHeaders:    []string{"Content-Length"},
