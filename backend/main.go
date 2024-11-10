@@ -3,15 +3,15 @@ package main
 import (
 	"document-backend/config"
 	"document-backend/routes"
-	"log"
+	// "log"
 
-	"github.com/joho/godotenv"
+	// "github.com/joho/godotenv"
 )
 
 func main() {
-	if err := godotenv.Load(); err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	// if err := godotenv.Load(); err != nil {
+	// 	log.Fatal("Error loading .env file")
+	// }
 
 	config.ConnectDatabase()
 	// config.Migrate()

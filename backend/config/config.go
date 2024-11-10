@@ -1,7 +1,7 @@
 package config
 
 import (
-	// "fmt"
+	"fmt"
 	"log"
 	"os"
 
@@ -20,22 +20,22 @@ func ConnectDatabase() {
 	}
 
 	// Retrieve the environment variables
-	// host := os.Getenv("MYSQLHOST")
-	// port := os.Getenv("MYSQLPORT")
-	// user := os.Getenv("MYSQLUSER")
-	// password := os.Getenv("MYSQLPASSWORD")
-	// dbname := os.Getenv("MYSQLDATABASE")
+	host, _ := os.LookupEnv("MYSQLHOST")
+	port, _ := os.LookupEnv("MYSQLPORT")
+	user, _ := os.LookupEnv("MYSQLUSER")
+	password, _ := os.LookupEnv("MYSQLPASSWORD")
+	dbname, _ := os.LookupEnv("MYSQLDATABASE")
 
 	// Log the DSN string (for debugging only, be careful with sensitive info)
-	// dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
-	// 	user, password, host, port, dbname)
-	// fmt.Println("Connecting with DSN:", dsn)
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+		user, password, host, port, dbname)
+	fmt.Println("Connecting with DSN:", dsn)
 
 	// url := fmt.Sprintf("mysql://%s:%s@%s:%s/%s", user, password, host, port, dbname)
-	url := os.Getenv("MYSQL_URL")
+	
 	// Try to connect to the database
 	var err error
-	DB, err = gorm.Open(mysql.Open(url), &gorm.Config{})
+	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatalf("Failed to connect to database: %v", err) // Log the error message
 	}
