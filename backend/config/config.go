@@ -27,13 +27,14 @@ func ConnectDatabase() {
 	dbname := os.Getenv("MYSQLDATABASE")
 
 	// Log the DSN string (for debugging only, be careful with sensitive info)
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
-		user, password, host, port, dbname)
-	fmt.Println("Connecting with DSN:", dsn)
+	// dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+	// 	user, password, host, port, dbname)
+	// fmt.Println("Connecting with DSN:", dsn)
 
+	url := fmt.Sprintf("mysql://%s:%s@%s:%s/%s", user, password, host, port, dbname)
 	// Try to connect to the database
 	var err error
-	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	DB, err = gorm.Open(mysql.Open(url), &gorm.Config{})
 	if err != nil {
 		log.Fatalf("Failed to connect to database: %v", err) // Log the error message
 	}
