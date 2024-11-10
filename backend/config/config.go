@@ -7,7 +7,7 @@ import (
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"github.com/joho/godotenv"
+	// "github.com/joho/godotenv"
 )
 
 var DB *gorm.DB
@@ -15,9 +15,9 @@ var DB *gorm.DB
 // ConnectDatabase initializes the database connection.
 func ConnectDatabase() {
 	// Load environment variables
-	if err := godotenv.Load(); err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	// if err := godotenv.Load(); err != nil {
+	// 	log.Fatal("Error loading .env file")
+	// }
 
 	// Retrieve the environment variables
 	host, _ := os.LookupEnv("MYSQLHOST")
