@@ -12,7 +12,7 @@ This project is a **full-stack Document Management System** built with **Go (Gin
 
 ### Document Management
 - Create, read, update, and delete personal documents.
-- Support for document privacy settings (Public/Private).
+- Support for document privacy settings (Public/Private). !upcomming
 
 ### Data Security
 - Passwords are hashed using **bcrypt** for enhanced security.
